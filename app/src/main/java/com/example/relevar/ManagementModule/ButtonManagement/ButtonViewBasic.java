@@ -15,13 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.relevar.ManagementModule.StorageManagement.BDData;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
-import com.example.relevar.ManagementModule.StorageManagement.EfectoresSearchAdapter;
 import com.example.relevar.R;
 
 import java.util.ArrayList;
@@ -296,7 +294,7 @@ public class ButtonViewBasic {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         LayoutInflater Inflater = LayoutInflater.from(context);
-        View view1 = Inflater.inflate(R.layout.dialog_date, null);
+        View view1 = Inflater.inflate(R.layout.basic_dialog_date, null);
         builder.setView(view1);
         builder.setCancelable(false);
         final AlertDialog dialog = builder.create();

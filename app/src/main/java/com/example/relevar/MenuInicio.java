@@ -60,7 +60,7 @@ public class MenuInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_inicio);
+        setContentView(R.layout.activity_menu_inicio);
 
         // Boton para comenzar a cargar datos
         empezar = findViewById(R.id.EMPEZAR);

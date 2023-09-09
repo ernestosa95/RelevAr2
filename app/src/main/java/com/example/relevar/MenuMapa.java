@@ -108,7 +108,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_mapa);
+        setContentView(R.layout.activity_menu_mapa);
 
         // Eliminar el action bar
         ActionBar actionbar = getSupportActionBar();

@@ -12,7 +12,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,6 @@ import com.example.relevar.ManagementModule.StorageManagement.SQLitePpal;
 import com.example.relevar.ManagementModule.ButtonManagement.ButtonDeclaration;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
 import com.example.relevar.ButtonsDeclarationPersonal.EstadoFisico.BotonVitaminaD;
-import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonAcompañamiento;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonAdicciones;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonTrastornosMentales;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonTrastornosNiños;
@@ -84,7 +82,7 @@ public class MenuPersona extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_persona);
+        setContentView(R.layout.activity_menu_persona);
 
         // Evitar la rotacion
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -365,7 +363,7 @@ public class MenuPersona extends AppCompatActivity {
     public void Fecha (View view){
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         LayoutInflater Inflater = getLayoutInflater();
-        View view1 = Inflater.inflate(R.layout.dialog_date, null);
+        View view1 = Inflater.inflate(R.layout.basic_dialog_date, null);
         builder.setView(view1);
         builder.setCancelable(false);
         final AlertDialog dialog = builder.create();
@@ -594,13 +592,13 @@ public class MenuPersona extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
     // ACOMPAÑAMIENTO
-    public void Acompañamiento(View view){
+    /*public void Acompañamiento(View view){
         BotonAcompañamiento botonAcompañamiento = new BotonAcompañamiento(this,
                 Persona,
                 this.findViewById(android.R.id.content));
         botonAcompañamiento.vista();
         Persona = botonAcompañamiento.returnPersona();
-    }
+    }*/
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------

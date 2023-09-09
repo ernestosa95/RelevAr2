@@ -1,7 +1,6 @@
 package com.example.relevar.ManagementModule.ButtonManagement;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import com.example.relevar.ButtonsDeclarationPersonal.EstadoFisico.BotonEnfermed
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonColon22;
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonHpv22;
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonScreningCancer22;
-import com.example.relevar.ButtonsDeclarationPersonal.General.BotonColon;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonAcompañamiento22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonOcio22;
 import com.example.relevar.R;
@@ -180,7 +178,7 @@ public class ButtonDeclaration {
     // NO EDITAR
     private View generateBtnMenu(int idIcon, String strTitle){
         LayoutInflater Inflater = LayoutInflater.from(context);
-        final View view = Inflater.inflate(R.layout.button_general_view, null);
+        final View view = Inflater.inflate(R.layout.basic_button_general_view, null);
 
         ImageView icon = view.findViewById(R.id.ICONGNRL);
         icon.setBackgroundResource(idIcon);

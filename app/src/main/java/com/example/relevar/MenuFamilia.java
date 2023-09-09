@@ -19,7 +19,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -88,7 +87,7 @@ public class MenuFamilia extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED); //evita la rotacion
-        setContentView(R.layout.menu_familia);
+        setContentView(R.layout.activity_menu_familia);
 
         // Eliminar el action bar
         ActionBar actionbar = getSupportActionBar();
