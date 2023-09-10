@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.relevar.BasicObjets.PersonClass;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,8 @@ import java.util.HashMap;
 public class SQLitePpal extends SQLiteOpenHelper {
     final String CREAR_TABLA_EFECTORES = "CREATE TABLE EFECTORES (NOMBRE TEXT, PROVINCIA TEXT,NOMBRE_ID TEXT, LOCALIDAD TEXT, DEPARTAMENTO TEXT, CP TEXT)";
     final String CREAR_TABLA_TRABAJOS = "CREATE TABLE TRABAJOS (TRABAJO TEXT)";
+
+    final String CREAR_TABLA_PUNTOS_REFERENCIA = "CREATE TABLE PUNTOS_REFERENCIA (LATITUD TEXT, LONGITUD TEXT, NOMBRE TEXT, TIPO TEXT, DESCRIPCION TEXT)";
     final String CREAR_TABLA_UNIFICADOS = "CREATE TABLE UNIFICADOS (FECHA TEXT)";
     final String CREAR_TABLA_BOTONES = "CREATE TABLE BOTONES (BOTON TEXT, ACTIVO BOOLEAN)";
     final String CREAR_TABLA_ENCUESTADORES = "CREATE TABLE ENCUESTADOR (ID TEXT,APELLIDO TEXT,PROVINCIA TEXT,DNI TEXT, ACTIVO BOOLEAN)";
@@ -40,6 +43,7 @@ public class SQLitePpal extends SQLiteOpenHelper {
         db.execSQL(CREAR_TABLA_UNIFICADOS);
         db.execSQL(CREAR_TABLA_NOTIFICACIONES);
         db.execSQL(CREAR_TABLA_MESSAGE_NOTIFICATIONS);
+        db.execSQL(CREAR_TABLA_PUNTOS_REFERENCIA);
         db.execSQL(CREAR_SERVERS);
     }
 
@@ -54,6 +58,7 @@ public class SQLitePpal extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS NOTIFICACIONES");
         db.execSQL("DROP TABLE IF EXISTS MESSAGE_NOTIFICATIONS");
         db.execSQL("DROP TABLE IF EXISTS SERVERS");
+        db.execSQL("DROP TABLE IF EXISTS PUNTOS_REFERENCIA");
         onCreate(db);
     }
 
@@ -64,6 +69,7 @@ public class SQLitePpal extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS MESSAGE_NOTIFICATIONS (LATITUD TEXT," +
                 "LONGITUD TEXT, NAME TEXT, SURNAME TEXT, DNI TEXT, TYPE_MESSAGE TEXT, STATE BOOLEAN, DATE TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS SERVERS (URL TEXT, NAME TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS PUNTOS_REFERENCIA (LATITUD TEXT, LONGITUD TEXT, NOMBRE TEXT, TIPO TEXT, DESCRIPCION TEXT)");
         try {
             db.execSQL("ALTER TABLE ENCUESTADOR ADD COLUMN EFECTOR TEXT");
         } catch (SQLException e) {
@@ -133,6 +139,21 @@ public class SQLitePpal extends SQLiteOpenHelper {
             return registros.getString(0);
         }else{
             return Nombre;
+        }
+    }
+
+    public String NombreEfector4Code(String code){
+        datos.clear();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String aux = "SELECT DISTINCT NOMBRE FROM EFECTORES WHERE NOMBRE_ID='"+code+"'";
+        //String aux1 = "SELECT * FROM EFECTORES";
+        Cursor registros = db.rawQuery(aux, null);
+        registros.moveToFirst();
+
+        if (registros.getCount()!=0) {
+            return registros.getString(0);
+        }else{
+            return code;
         }
     }
 
@@ -706,5 +727,63 @@ public class SQLitePpal extends SQLiteOpenHelper {
         db.close();
 
         return efector;
+    }
+
+    public void InsertReferencePoint(String latitud, String longitud, String nombre, String tipo, String descripcion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put("LATITUD", latitud);
+        valores.put("LONGITUD", longitud);
+        valores.put("NOMBRE", nombre);
+        valores.put("TIPO", tipo);
+        valores.put("DESCRIPCION", descripcion);
+
+        db.insert("PUNTOS_REFERENCIA", null, valores);
+        db.close();
+    }
+
+    public ArrayList<LatLng> SearchAllCordinatesReferencePoints(){
+        ArrayList<LatLng> values = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String search = "SELECT LATITUD, LONGITUD FROM PUNTOS_REFERENCIA";
+        Cursor registros = db.rawQuery(search, null);
+
+        registros.moveToFirst();
+        for (int i=0; i<registros.getCount(); i++){
+            values.add(new LatLng(Double.parseDouble(registros.getString(0)), Double.parseDouble(registros.getString(1))));
+            registros.moveToNext();
+        }
+        db.close();
+
+        return values;
+    }
+
+    public Boolean IsReferencePoint(String latitud, String longitud){
+        Boolean value = Boolean.FALSE;
+        String consulta = "SELECT NOMBRE FROM PUNTOS_REFERENCIA WHERE LATITUD='"+latitud+"' AND LONGITUD='"+longitud+"'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor registros = db.rawQuery(consulta, null);
+        Log.e("puntos ref", latitud + longitud +" numbre");
+
+        if (registros.getCount()!=0){
+            value = Boolean.TRUE;
+
+        }
+        return value;
+    }
+
+    public String getNameReferencePoint(String latitud, String longitud){
+        String value = "";
+        String consulta = "SELECT NOMBRE FROM PUNTOS_REFERENCIA WHERE LATITUD='"+latitud+"' AND LONGITUD='"+longitud+"'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor registros = db.rawQuery(consulta, null);
+
+        registros.moveToFirst();
+        if (registros.getCount()!=0){
+            value = registros.getString(0);
+        }
+
+        return value;
     }
 }

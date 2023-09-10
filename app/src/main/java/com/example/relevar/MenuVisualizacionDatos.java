@@ -31,6 +31,7 @@ import com.example.relevar.ManagementModule.StorageManagement.BDData;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
 import com.example.relevar.BasicObjets.FamiliarUnityClass;
 import com.example.relevar.BasicObjets.PersonClass;
+import com.example.relevar.ManagementModule.StorageManagement.SQLitePpal;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -379,7 +380,7 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
 
         return values;
     }
-
+    private SQLitePpal sqLitePpal;
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void DataPerson(String dni){
         // Defino las caracteristicas
@@ -389,6 +390,7 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
                 mostrar = familiarmembers.get(j);
             }
         }
+        sqLitePpal = new SQLitePpal(getBaseContext(), "DATA_PRINCIPAL", null, 1);
         // Defino los contenedores
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MiEstiloAlert);
         TextView textView = new TextView(this);
@@ -412,7 +414,7 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
         TextView textView1 = new TextView(this);
         textView1.setTextColor(getColor(R.color.colorBlueLigth));
 
-        String data="";
+        /*String data="";
         for (int i=0; i<mostrar.PersonValues().size();i++){
             String strMostrar = mostrar.Data.get(mostrar.PersonValues().get(i).
                     replace(".","").replace("?","").
@@ -425,7 +427,7 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
                             replace("¿", "").replace("/", "")) + "\n";
                 }
             }
-        }
+        }*/
 
         Archivos mngFile = new Archivos(this);
         ArrayList<String> keysUD = mngFile.getCodeCabecerasPersonasGuardable(this);
@@ -439,15 +441,15 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
                     if (mapeo.get(mostrar.Data.get(key)) != null) {
                         aux22 += mapeo.get(mostrar.Data.get(key)) + "\n";
                     } else {
+                        if (key.equals("EFECTOR")){ aux22 += sqLitePpal.NombreEfector4Code(mostrar.Data.get(key)) + "ef\n"; }
                         aux22 += mostrar.Data.get(key) + "\n";
                     }
                 }
             }
         }
 
-
-        if(data.length()==0){data="NO SE REGISTRARON DATOS";}
-        textView1.setText(data+aux22);
+        if(aux22.length()==0){aux22="NO SE REGISTRARON DATOS";}
+        textView1.setText(aux22);
 
         builder.setPositiveButton("LISTO", new DialogInterface.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.relevar.ManagementModule.StastisticsManagement
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TableLayout
@@ -16,12 +17,9 @@ class Stats : AppCompatActivity() {
     private lateinit var binding: ActivityStatsBinding
     private lateinit var adapter: HorizontalBarChartAdapter
 
-    private var list = arrayListOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
     private var list_hombres_values = arrayListOf<Int>()
     private var list_mujeres_values = arrayListOf<Int>()
     private var list_categorias_edades = arrayListOf<String>()
-    private var list_mujeres = arrayListOf<Int>(2,1,6,10,9,25,5,5,8,9,1,2,7,22,5,7)
-    private var list_edades = arrayListOf<String>("0-1", "2-5", "6-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-59", "70 y +")
     private var maxValue = 0
     private var maxValueOnXAxis = 0
     private var granularity = 0
@@ -64,7 +62,7 @@ class Stats : AppCompatActivity() {
     }
 
     private fun setGraphRecyclerViewAdapter() {
-        adapter = HorizontalBarChartAdapter(list_hombres_values, list_mujeres_values, list_categorias_edades, maxValueOnXAxis)
+        adapter = HorizontalBarChartAdapter(ArrayList(list_hombres_values.reversed()), ArrayList(list_mujeres_values.reversed()), ArrayList(list_categorias_edades.reversed()), maxValueOnXAxis)
         binding.horizontalBarChartRecyclerview.adapter = adapter
     }
 
@@ -90,12 +88,14 @@ class Stats : AppCompatActivity() {
     private fun generateOriginLabelForXAxis() {
         val textView = TextView(this)
         textView.text = "0"
+        textView.setTextColor(Color.WHITE)
         binding.xAxisTextviewContainerLayout.addView(textView)
     }
 
     private fun generateXAxisTextView(text: String) {
         val txtView = TextView(this)
         txtView.text = text
+        txtView.setTextColor(Color.WHITE)
         txtView.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
         txtView.layoutParams = TableLayout.LayoutParams(
                 TableLayout.LayoutParams.WRAP_CONTENT,

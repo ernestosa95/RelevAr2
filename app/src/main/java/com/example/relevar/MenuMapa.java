@@ -444,7 +444,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
                 fhir.sendJson(str_url, user.getText().toString(), pass.getText().toString(), datesview);
             }
         });
-        
+
         Button cancel = view1.findViewById(R.id.CANCELARSEND);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -873,10 +873,13 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
 
             LatLng position = marker.getPosition();
             String pos = position.latitude +" "+position.longitude;
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15));
-            //Toast.makeText(getBaseContext(),pos, Toast.LENGTH_SHORT).show();
-            //InfoFamilia(pos);
-            ViewInfoFamily(pos);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,20));
+            if (admin.IsReferencePoint(Double.toString(position.latitude), Double.toString(position.longitude))){
+                Toast.makeText(getBaseContext(), "PUNTO DE REFERENCIA" , Toast.LENGTH_SHORT).show();
+            }else{
+                ViewInfoFamily(pos);
+            }
+
             return false;
         });
 
@@ -923,6 +926,22 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
                             mo1.icon(BitmapDescriptorFactory.fromBitmap(drawableBitmap));
                             map.addMarker(mo1);
                         }
+                }
+
+                //TODO: agregar texto de nombre para identificar el punto de referencia
+                ArrayList<LatLng> marcadoresReferencePoints = new ArrayList<>();
+                marcadoresReferencePoints.addAll(admin.SearchAllCordinatesReferencePoints());
+                if (marcadoresReferencePoints.size()!=0){
+                    for (int i = 0; i < marcadoresReferencePoints.size(); i++) {
+                        MarkerOptions mo1 = new MarkerOptions();
+                        mo1.position(marcadoresReferencePoints.get(i));
+                        mo1.title(admin.getNameReferencePoint(Double.toString(marcadoresReferencePoints.get(i).latitude), Double.toString(marcadoresReferencePoints.get(i).longitude)));
+
+                        Bitmap drawableBitmap = null;
+                        drawableBitmap = getBitmap(R.drawable.icono_mapa_violeta);
+                        mo1.icon(BitmapDescriptorFactory.fromBitmap(drawableBitmap));
+                        map.addMarker(mo1);;
+                    }
                 }
 
                 handlerMarker.postDelayed(this, 5000);
@@ -1403,5 +1422,84 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
     public void Bluetooth(View view){
         Intent intent = new Intent(getBaseContext(), Bluetooth.class);
         startActivityForResult(intent, 1);
+    }
+
+    @SuppressLint("MissingPermission")
+    public void ReferencePoints(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater Inflater = LayoutInflater.from(this);
+        final View view_alert = Inflater.inflate(R.layout.basic_alert, null);
+        view_alert.setFocusable(true);
+        builder.setView(view_alert);
+        builder.setCancelable(false);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        //Cabecera
+        TextView txtCabecera = view_alert.findViewById(R.id.TXTGralCabecera);
+        txtCabecera.setText("REGISTRO DE PUNTOS DE REFERENCIA");
+
+        //Crear el linerLayout que va a contener las diferentes categorias
+        LinearLayout lyOptions = view_alert.findViewById(R.id.LYGralOptions);
+        ButtonViewBasic buttonViewBasic = new ButtonViewBasic(this);
+
+        View nombre = buttonViewBasic.generateTextEdit("NOMBRE", this);
+        lyOptions.addView(nombre);
+
+        ArrayList<String> optionTipos = new ArrayList<>();
+        optionTipos.add("CLUB");
+        optionTipos.add("COMERCIO");
+        optionTipos.add("ESCUELAS");
+        optionTipos.add("OTRO");
+        View tipo = buttonViewBasic.generateSpinnerMultipleSelect("Tipo de lugar", optionTipos);
+        lyOptions.addView(tipo);
+
+        View descripcion = buttonViewBasic.generateTextEdit("Descripciòn", this);
+        lyOptions.addView(descripcion);
+
+        //Boton guardar
+        Button guardar = view_alert.findViewById(R.id.GUARDARGrl);
+        guardar.setText("REGISTRAR");
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (buttonViewBasic.getValueText(nombre).length()!=0) {
+                    if (buttonViewBasic.getValueSpiner(tipo).length()!=0) {
+                        if (buttonViewBasic.getValueText(descripcion).length()!=0) {
+                            String namePoint = buttonViewBasic.getValueText(nombre);
+                            String tipoPoint = buttonViewBasic.getValueSpiner(tipo);
+                            String descripcionPoint = buttonViewBasic.getValueText(descripcion);
+                            LocationManager service = (LocationManager)
+                                    getSystemService(LOCATION_SERVICE);
+                            Criteria criteria = new Criteria();
+                            String provider = service.getBestProvider(criteria, false);
+                            assert provider != null;
+                            final Location[] location = {service.getLastKnownLocation(provider)};
+                            try {
+                                admin.InsertReferencePoint(Double.toString(location[0].getLatitude()), Double.toString(location[0].getLongitude()), namePoint, tipoPoint, descripcionPoint);
+                            } catch (Exception e) {
+                                Toast.makeText(getBaseContext(), "AGUARDE, EL GPS SE ESTA LOCALIZANDO", Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(getBaseContext(), "DEBE INGRESAR UNA DESCRIPCION", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(getBaseContext(), "DEBE SELECCIONAR UN TIPO DE PUNTO", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getBaseContext(), "DEBE INGRESAR UN NOMBRE", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ImageButton cancelar = view_alert.findViewById(R.id.CANCELARGrl);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
 }

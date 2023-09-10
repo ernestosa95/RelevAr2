@@ -17,7 +17,7 @@
             android:layout_height="28dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="1dp"
-            android:background="@color/colorImpar"
+            android:background="#0C4978"
             android:elevation="5dp" />
 
         <View
@@ -27,7 +27,7 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/colorExtraBlueLigth"
+            android:background="#0CEBD4"
             android:elevation="5dp" />
 
         <View
@@ -37,7 +37,7 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/colorBlue"
+            android:background="#DE312C"
             android:elevation="5dp" />
 
         <TextView

@@ -515,8 +515,11 @@ public class MenuPersona extends AppCompatActivity {
                     Persona.Nacimiento = txtNacimientoEditar.getText().toString();
                     txtNacimiento.setText(Persona.Nacimiento);
                     if (indocumentado.isChecked()) {
-                        Persona.Data.put("RE37_0", "SI");
-                        txtDni.setText("INDOC. "+Persona.DNI);
+                        //TODO: revisar esta parte principalmente con el else
+                        if (!Persona.DNI.contains("INDOC")) {
+                            Persona.Data.put("RE37_0", "SI");
+                            txtDni.setText("INDOC. " + Persona.DNI);
+                        }
                     }
                     dialog.dismiss();
                 }else{

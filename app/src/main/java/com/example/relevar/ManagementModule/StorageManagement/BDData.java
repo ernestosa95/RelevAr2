@@ -753,6 +753,8 @@ public class BDData extends SQLiteOpenHelper {
         return values;
     }
 
+
+
     public String Date(){
         String values = "";
 
