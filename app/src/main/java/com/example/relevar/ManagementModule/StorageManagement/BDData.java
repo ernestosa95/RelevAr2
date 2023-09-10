@@ -851,7 +851,8 @@ public class BDData extends SQLiteOpenHelper {
         masculinos.put("70 y +", 0);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String search = "SELECT DIAMESAÑO, SEXO FROM PERSONS";
+        //TODO: evitar contar para la piramide las personas que se han registrado mas de una vez
+        String search = "SELECT FECHA_NACIMIENTO, SEXO FROM PERSONS";
         Cursor registros = db.rawQuery(search, null);
 
         registros.moveToFirst();

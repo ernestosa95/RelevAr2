@@ -50,7 +50,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.relevar.ManagementModule.ButtonManagement.ButtonViewBasic;
 import com.example.relevar.ManagementModule.ShareDataManagement.Bluetooth;
-import com.example.relevar.ManagementModule.StastisticsManagement.Statistics;
+import com.example.relevar.ManagementModule.StastisticsManagement.Stats;
 import com.example.relevar.ManagementModule.StorageManagement.BDUbicationManager;
 import com.example.relevar.ManagementModule.StorageManagement.EfectoresSearchAdapter;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
@@ -835,7 +835,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void Statistics(View view){
-        Intent intent = new Intent(getBaseContext(), Statistics.class);
+        Intent intent = new Intent(getBaseContext(), Stats.class);
         startActivityForResult(intent, 1);
     }
 //--------------------------------------------------------------------------------------------------
