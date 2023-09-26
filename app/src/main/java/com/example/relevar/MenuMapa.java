@@ -2,9 +2,11 @@ package com.example.relevar;
 
 import static java.lang.Thread.sleep;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.annotation.SuppressLint;
@@ -22,7 +24,9 @@ import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -70,7 +74,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +88,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
+public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.SnapshotReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 123;
 
@@ -103,6 +112,8 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
     SQLitePpal admin;
     TextView cantFamiliasCercanas, cantNotifications;
     ArrayList<HashMap<String,String>> mssgs;
+
+    private GoogleMap googleMap;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -138,6 +149,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
         }
         mapView.onCreate(mapBundle);
         mapView.getMapAsync(this);
+
         latLng = new LatLng(-60, -30);
 
         ITrecorrido = (ConstraintLayout) findViewById(R.id.RECORRIDOCL);
@@ -844,11 +856,14 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(final GoogleMap map) {
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
         LatLng posinicial = new LatLng(-31.9862369, -59.2871663);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(posinicial,7));
+
+        this.googleMap = map;
 
         // Funcion que le da al boton centrar la funcionalidad
         ImageButton centrar = findViewById(R.id.IMGBTCENTRAR);
@@ -947,6 +962,11 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
                 handlerMarker.postDelayed(this, 5000);
             }
         }, 0);
+
+    }
+
+    public void ShareMap(View view){
+        googleMap.snapshot(this);
 
     }
 
@@ -1500,6 +1520,36 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback {
                 dialog.dismiss();
             }
         });
+
+    }
+
+    @Override
+    public void onSnapshotReady(@Nullable Bitmap bitmap) {
+        // Save the snapshot to a file
+        File nuevaCarpeta = new File(this.getExternalFilesDir(null).toString());
+        File file = new File(nuevaCarpeta.getAbsolutePath()+"/"+ "map.png");//new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "map.png");
+        Log.e("ruta", file.getAbsolutePath()+".");
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Uri contentUri = Uri.fromFile(file);
+        contentUri = FileProvider.getUriForFile(this, "com.example.relevar", new File("//storage/emulated/0/Android/data/com.example.relevar/files/map.png"));
+
+        // Create an intent to share the content file
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/png");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+
+        // Start the share activity
+        startActivity(Intent.createChooser(shareIntent, "Compartir imagen"));
 
     }
 }

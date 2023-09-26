@@ -11,9 +11,8 @@
     another example:  Environment.getExternalStorageDirectory() + File.separator + "temps" + "myFile.pdf"
     <external-path name="." path="/RelevAr"/>
      -->
-
     <external-path
-        name="external"
+        name="external_files"
         path="." />
     <external-files-path
         name="external_files"

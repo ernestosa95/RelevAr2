@@ -309,14 +309,15 @@
             app:fab_title="SUBIR DATOS A LA BD" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/recorrido"
+            android:id="@+id/COMPARTIR_MAPA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:onClick="ShareMap"
+            android:visibility="visible"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_icon="@android:drawable/ic_menu_mapmode"
             app:fab_size="normal"
-            app:fab_title="INICIAR RECORRIDO"
+            app:fab_title="COMPARTIR MAPA"
             tools:layout_editor_absoluteY="294dp" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
