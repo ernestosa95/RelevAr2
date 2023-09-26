@@ -17,16 +17,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.relevar.ManagementModule.ShareDataManagement.PDFGenerate;
 import com.example.relevar.ManagementModule.StorageManagement.BDData;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
 import com.example.relevar.BasicObjets.FamiliarUnityClass;
@@ -56,7 +55,7 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_visualizacion_datos);
+        setContentView(R.layout.activity_visualizacion_datos);
 
         // Eliminar el action bar
         ActionBar actionbar = getSupportActionBar();
@@ -143,6 +142,8 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
         addDATA.setVisibility(View.VISIBLE);
         ConstraintLayout editDATA = findViewById(R.id.EDITREGISTER);
         editDATA.setVisibility(View.GONE);
+        Button pdf = findViewById(R.id.button11);
+        pdf.setVisibility(View.GONE);
 
         // Codigo de funcionamiento de los tabs
         TabHost tabs = findViewById(R.id.TABVIEWFAMILY);
@@ -237,6 +238,8 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
         ConstraintLayout editDATA = findViewById(R.id.EDITREGISTER);
         editDATA.setVisibility(View.VISIBLE);
         lineaBlanca.setVisibility(View.GONE);
+        Button pdf = findViewById(R.id.button11);
+        pdf.setVisibility(View.VISIBLE);
 
         ConstraintLayout clfamilia = findViewById(R.id.CLFAMILIA);
         clfamilia.setVisibility(View.VISIBLE);
@@ -304,11 +307,6 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
             }
         }
         datosvivienda.setText(datavivienda);
-
-        /*Object[] aux = familia.Data.keySet().toArray();
-        for (Object o : aux){
-            Log.e("key "+o.toString(), familia.Data.get("REDO1 0")+" value");
-        }*/
 
         TextView datoserviciosbasicos = findViewById(R.id.TEXTVIESERVICIOSBASICOS);
         String dataserviciosbasicos = "";
@@ -413,21 +411,6 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
 
         TextView textView1 = new TextView(this);
         textView1.setTextColor(getColor(R.color.colorBlueLigth));
-
-        /*String data="";
-        for (int i=0; i<mostrar.PersonValues().size();i++){
-            String strMostrar = mostrar.Data.get(mostrar.PersonValues().get(i).
-                    replace(".","").replace("?","").
-                    replace("¿","").replace("/",""));
-
-            if(strMostrar!=null){
-                if (strMostrar.length()!=0) {
-                    data += mostrar.PersonValues().get(i) + ": " + mostrar.Data.get(mostrar.PersonValues().get(i).
-                            replace(".", "").replace("?", "").
-                            replace("¿", "").replace("/", "")) + "\n";
-                }
-            }
-        }*/
 
         Archivos mngFile = new Archivos(this);
         ArrayList<String> keysUD = mngFile.getCodeCabecerasPersonasGuardable(this);
@@ -554,9 +537,12 @@ public class MenuVisualizacionDatos extends AppCompatActivity {
     }
 
     public void sendPDF(View view){
-        Archivos archivos = new Archivos(getBaseContext());
-        archivos.CreatePDF(familia, familiarmembers);
-        startActivity(archivos.SharePDF());
+        //Archivos archivos = new Archivos(getBaseContext());
+        //archivos.CreatePDF(familia, familiarmembers);
+        PDFGenerate pdfGenerate = new PDFGenerate(this);
+        pdfGenerate.setDataFamilyForPDF(familia);
+        pdfGenerate.setDataPersonsForPDF(familia.Data.get("LATITUD"), familia.Data.get("LONGITUD"),familia.Data.get("FECHA"));
+        startActivity(pdfGenerate.sharePDF());
     }
 
     @Override

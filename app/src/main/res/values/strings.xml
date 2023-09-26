@@ -290,5 +290,5 @@
     <string name="text_code_hpv" translatable="false">Código de la muestra</string>
     <string name="escanear" translatable="false">Escanear DNI</string>
     <string name="antecedentes_familiares" translatable="false">ANTECEDENTES FAMILIARES</string>
-    <string name="observaciones_vivienda" translatable="false">OBSERVACIONES VIVIENDA</string>
+    <string name="observaciones_vivienda" translatable="false">OBSERVACIONES_VIVIENDA</string>
 </resources>

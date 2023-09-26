@@ -264,6 +264,32 @@ public class Archivos implements Serializable {
         return values;
     }
 
+    public ArrayList<String> getDomicilioBotons(){
+        ArrayList<String> values = new ArrayList<>();
+
+        try{
+            InputStream fis = context.getResources().openRawResource(R.raw.categorias_domicilio);
+            DataInputStream in = new DataInputStream(fis);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String myData="";
+            while ((myData=br.readLine())!=null){
+                String[] data = myData.split(",");
+                if(!values.contains(data[2]) && !data[2].equals("NG")) {
+                    values.add(data[2]);
+                }
+            }
+
+            br.close();
+            in.close();
+            fis.close();
+        }
+        catch (IOException e){
+            Toast.makeText(context, R.string.ocurrio_error, Toast.LENGTH_SHORT).show();
+        }
+
+        return values;
+    }
+
     public HashMap<String, String> getMapCategoriesDomicilio(){
         HashMap<String, String> values = new HashMap<String,String>();
 

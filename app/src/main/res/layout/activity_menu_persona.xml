@@ -95,8 +95,8 @@
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/BTNCON"
-                                android:layout_width="175dp"
-                                android:layout_height="100dp"
+                                android:layout_width="130dp"
+                                android:layout_height="200dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/fondo2"
                                 android:elevation="5dp"
@@ -106,11 +106,10 @@
                                     android:id="@+id/ICONOCON"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginStart="5dp"
-                                    app:layout_constraintBottom_toBottomOf="@+id/CON"
+                                    android:layout_marginTop="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/CON"
-                                    app:layout_constraintVertical_bias="0.454"
+                                    app:layout_constraintTop_toTopOf="parent"
                                     app:srcCompat="@drawable/instructor" />
 
                                 <TextView
@@ -125,8 +124,7 @@
                                     app:layout_constraintBottom_toTopOf="@+id/AVANCECON"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.985"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/CON" />
+                                    app:layout_constraintStart_toStartOf="parent" />
 
                                 <TextView
                                     android:id="@+id/CON"
@@ -138,9 +136,10 @@
                                     android:text="METODOS DE CONTACTO"
                                     android:textColor="#FFFFFF"
                                     android:textSize="15sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/COMPLETADOCON"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@+id/ICONOCON"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/ICONOCON" />
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/AVANCECON"
@@ -158,8 +157,8 @@
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/BTNGEN"
-                                android:layout_width="175dp"
-                                android:layout_height="100dp"
+                                android:layout_width="130dp"
+                                android:layout_height="200dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/fondo2"
                                 android:elevation="5dp"
@@ -169,10 +168,10 @@
                                     android:id="@+id/ICONOGEN"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    app:layout_constraintBottom_toBottomOf="@+id/GEN"
+                                    android:layout_marginTop="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/GEN"
-                                    app:layout_constraintVertical_bias="0.454"
+                                    app:layout_constraintTop_toTopOf="parent"
                                     app:srcCompat="@drawable/man" />
 
                                 <TextView
@@ -187,22 +186,25 @@
                                     app:layout_constraintBottom_toTopOf="@+id/AVANCEGEN"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.985"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/GEN" />
+                                    app:layout_constraintStart_toStartOf="parent" />
 
                                 <TextView
                                     android:id="@+id/GEN"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="2dp"
                                     android:layout_marginTop="15dp"
+                                    android:layout_marginEnd="2dp"
                                     android:foregroundGravity="center_horizontal"
                                     android:gravity="center_horizontal"
                                     android:text="DESCRIPCION DE LA PERSONA"
                                     android:textColor="#FFFFFF"
                                     android:textSize="15sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/COMPLETADOGEN"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@+id/ICONOGEN"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintHorizontal_bias="0.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/ICONOGEN" />
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/AVANCEGEN"
