@@ -4,4 +4,5 @@
     <dimen name="alto_icono">40dp</dimen>
     <dimen name="ancho_map">40dp</dimen>
     <dimen name="alto_map">50dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -279,6 +279,22 @@ public class BDData extends SQLiteOpenHelper {
         return value;
     }
 
+    public String getValues(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String value = "";
+
+        String search = "SELECT * FROM PERSONS";
+        Cursor registros = db.rawQuery(search, null);
+
+        if (registros.getCount()!=0){
+            registros.moveToFirst();
+            value = registros.getString(0);}
+
+        db.close();
+        return value;
+    }
+
     public void deleteCacheUD(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM CACHEUD");

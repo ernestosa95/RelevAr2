@@ -108,8 +108,12 @@ public class MenuInicio extends AppCompatActivity {
 
         admin = new SQLitePpal(getBaseContext(), "DATA_PRINCIPAL", null, 1);
         adminBDData = new BDData(getBaseContext(), "BDData", null, 1);
-        adminBDData.CrearTablaUnificados();
-        adminBDData.renameColumns();
+        try {
+            adminBDData.CrearTablaUnificados();
+            adminBDData.renameColumns();
+        }catch (Exception e){
+            Toast.makeText(getBaseContext(), "error 1 " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
         FloatingActionButton updateBD = findViewById(R.id.UPDATEBD);
         updateBD.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +123,12 @@ public class MenuInicio extends AppCompatActivity {
             }
         });
 
-        UpdateBDEfectores();
+        try {
+            UpdateBDEfectores();
+        }catch (Exception e){
+            Toast.makeText(getBaseContext(), R.string.ocurrio_error + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 //--------------------------------------------------------------------------------------------------

@@ -265,15 +265,25 @@ public class PDFGenerate {
                 canvas.drawRect(615, h, 1230, h + (altoTexNormal + (dataPersons.get(i+1).size() * (altoTexNormal+5))), recuadro_p2);
 
                 for (Object value : dataPersons.get(i + 1)) {
-                    h = h + altoTexNormal + 5;
-                    h_aux1 += altoTexNormal + 5;
-                    canvas.drawText(value.toString(), 620, h, textGeneral);
+                    if (value.toString().length()<55) {
+                        h = h + altoTexNormal + 5;
+                        h_aux1 += altoTexNormal + 5;
+                        canvas.drawText(value.toString(), 620, h, textGeneral);
+                    }else{
+                        h = h + altoTexNormal + 5;
+                        h_aux1 += altoTexNormal + 5;
+                        canvas.drawText(value.toString().substring(0,50), 620, h, textGeneral);
+                        h = h + altoTexNormal + 5;
+                        h_aux1 += altoTexNormal + 5;
+                        canvas.drawText(value.toString().substring(50,value.toString().length()), 620, h, textGeneral);
+                    }
                 }
             }
 
             if (h_aux>h_aux1){
                 h = h - h_aux1 + h_aux;
             }
+
             h+=altoTexTitulo;
         }
 

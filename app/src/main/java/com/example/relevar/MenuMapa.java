@@ -633,14 +633,17 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
 
         location[0] = service.getLastKnownLocation(provider);
 
-        ArrayList<FamiliarUnityClass> x = adminBDData.MinnusMeters(getBaseContext(),
-                Double.parseDouble(String.valueOf(location[0].getLatitude())),
-                Double.parseDouble(String.valueOf(location[0].getLongitude())),
-                50);
+        ArrayList<FamiliarUnityClass> x = new ArrayList<>();
+        if(location[0]!=null) {
+            x = adminBDData.MinnusMeters(getBaseContext(),
+                    Double.parseDouble(String.valueOf(location[0].getLatitude())),
+                    Double.parseDouble(String.valueOf(location[0].getLongitude())),
+                    50);
+        }else {
+            Toast.makeText(getBaseContext(), "NO SE PUEDEN TOMAR DATOS DEL GPS AUN" , Toast.LENGTH_SHORT).show();
+        }
 
-        if (x != null){
-            if (x.size()!=0) {
-
+        if (x != null && x.size()!=0){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 LayoutInflater Inflater = LayoutInflater.from(this);
                 final View view = Inflater.inflate(R.layout.basic_alert, null);
@@ -685,7 +688,6 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
                         dialog.dismiss();
                     }
                 });
-            }
         }else{
             Intent Modif = new Intent(getBaseContext(), MenuFamilia.class);
             Modif.putExtra("IDENCUESTADOR", encuestador.getID());
