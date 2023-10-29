@@ -28,11 +28,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -372,7 +376,7 @@ public class FHIR {
                     date_today,
                     encuestador.Nombre + " " + encuestador.Apellido,
                     encuestador.DNI,
-                    "data ubicacion",
+                    removeIndent("data ubicacion"),
                     bdUbicationMannager.readUbications4Date(dates.get(i))));
             Log.e("UBICACION", entries_ubication.get(i).toString());
         }
@@ -425,18 +429,18 @@ public class FHIR {
 
             //envio paciente
             Log.e("msg", "envio de paciente");
-            String num = "", calle = "";
-            if (familia.Data.get(context.getString(R.string.numero))!=null){num=familia.Data.get(context.getString(R.string.numero));}
-            if (familia.Data.get(context.getString(R.string.calle))!=null){calle=familia.Data.get(context.getString(R.string.calle));}
+            String num = " ", calle = " ";
+            if (familia.Data.get(context.getString(R.string.numero))!=null && familia.Data.get(context.getString(R.string.numero)).length()!=0){num=familia.Data.get(context.getString(R.string.numero));}
+            if (familia.Data.get(context.getString(R.string.calle))!=null && familia.Data.get(context.getString(R.string.calle)).length()!=0){calle=familia.Data.get(context.getString(R.string.calle));}
             entries.add(fhiRresources.patientResourceFHIR(
                     persona.DNI,
                     persona.Nombre.split(" "),
                     persona.Apellido,
                     persona.Sexo,
-                    persona.Nacimiento,
+                    convertStringDateToDateNacimiento(persona.Nacimiento),
                     calle,
-                    "",
-                    "",
+                    " ",
+                    " ",
                     "AR",
                     data_encuestador.get("PROVINCIA"),
                     Double.parseDouble(familia.Data.get(context.getString(R.string.latitud))),
@@ -444,12 +448,6 @@ public class FHIR {
                     num,
                     familia.Data.get(context.getString(R.string.telefono_familiar))
             ));
-
-            /*Object[] datas = persona.Data.keySet().toArray();
-            for (Object c : datas){
-                Log.e("cabeceras enviar", c.toString());
-                Log.e("valores enviar", persona.Data.get(c.toString()));
-            }*/
 
             //envio general
             for(int j=0; j<datos_enviar_evaluacion_du.size();j++){
@@ -461,29 +459,25 @@ public class FHIR {
                                         persona.DNI,
                                         datos_enviar_evaluacion_du.get(j),
                                         datos_enviar_evaluacion_du.get(j),
-                                        persona.Fecha,
+                                        convertStringDateToDateeffectiveDateTime(persona.Fecha),
                                         data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
                                         data_encuestador.get("DNI"),
-                                        persona.Data.get(datos_enviar_evaluacion_du.get(j)),
+                                        removeIndent(persona.Data.get(datos_enviar_evaluacion_du.get(j)).replace("    ", " ")),
                                         persona.Data.get(datos_enviar_evaluacion_du.get(j))));
-                                //Log.e("cabecera:", datos_enviar_evaluacion_du.get(j));
-                                //Log.e("data", persona.Data.get(datos_enviar_evaluacion_du.get(j)));
                             }
                         }
                         if (familia.Data.containsKey(datos_enviar_evaluacion_du.get(j))) {
                             if (familia.Data.get(datos_enviar_evaluacion_du.get(j)) != null && familia.Data.get(datos_enviar_evaluacion_du.get(j)).length() != 0) {
-                                //Log.e("msg", "data familia");
+
                                 entries.add(fhiRresources.observationIndecResourceFHIR(
                                         persona.DNI,
                                         datos_enviar_evaluacion_du.get(j),
                                         datos_enviar_evaluacion_du.get(j),
-                                        persona.Fecha,
+                                        convertStringDateToDateeffectiveDateTime(persona.Fecha),
                                         data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
                                         data_encuestador.get("DNI"),
-                                        familia.Data.get(datos_enviar_evaluacion_du.get(j)),
+                                        removeIndent(familia.Data.get(datos_enviar_evaluacion_du.get(j))).replace("    ", " "),
                                         familia.Data.get(datos_enviar_evaluacion_du.get(j))));
-                                //Log.e("cabecera familia:", datos_enviar_evaluacion_du.get(j));
-                                //Log.e("data familia", familia.Data.get(datos_enviar_evaluacion_du.get(j)));
                             }
                         }
                     }catch (Exception e){
@@ -492,84 +486,6 @@ public class FHIR {
 
             }
 
-
-
-            /*if((persona.Data.get(context.getString(R.string.realizo_test_hpv)) != null && persona.Data.get(context.getString(R.string.realizo_test_hpv)).length() != 0)
-                    || (persona.Data.get(context.getString(R.string.prueba_cancer_colon)) != null && persona.Data.get(context.getString(R.string.prueba_cancer_colon)).length()!=0)) {
-                persona.DNI = persona.DNI.replace(" ", "");
-
-                String code_du = familia.Latitud + ' ' + familia.Longitud;
-                ArrayList<String> data2send = new ArrayList<>();
-                data2send.add("TIPO DE VIVIENDA");
-                data2send.add("ORIGEN AGUA");
-                data2send.add("AGUA");
-                data2send.add("BAÑO");
-                data2send.add("EL BAÑO TIENE");
-                data2send.add("EXCRETAS");
-                data2send.add("MATERIAL PREDOMINANTE EN LAS PAREDES EXTERIORES");
-                data2send.add("MATERIAL PREDOMINANTE EN LA CUBIERTA EXTERIOR DEL TECHO");
-                data2send.add("MATERIAL DE LOS PISOS");
-                data2send.add("MENORES");
-                //data2send.add("USA PARA COCINAR");
-                data2send.add("CANTIDAD DE PIEZAS");
-
-                Date date = new Date();
-                String fecha = "";
-                SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
-                SimpleDateFormat newFormat = new SimpleDateFormat("yyyy/mm/dd");
-                try {
-                    date = sdf.parse(persona.Fecha);
-                    fecha = newFormat.format(date);
-                    //String[] aux = fecha.split("/");
-                    //fecha = aux[0]+"/"+Integer.toString(Integer.parseInt(aux[1])+1)+"/"+aux[2];
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                // Enviar datos relacionados con terreno de sangre en materia fecal
-                // Datos a enviar
-                ArrayList<String> categories_colon = new ArrayList<>();
-                categories_colon.add(context.getString(R.string.antecedentes_cancer_colon));
-                categories_colon.add(context.getString(R.string.sintomas_cancer_colon));
-                categories_colon.add(context.getString(R.string.prueba_cancer_colon));
-                categories_colon.add(context.getString(R.string.razon_no_prueba_colon));
-                categories_colon.add(context.getString(R.string.code_hpv));
-
-                for (int j = 0; j < categories_colon.size(); j++) {
-                    if (persona.Data.containsKey(categories_colon.get(j))) {
-                        if (persona.Data.get(categories_colon.get(j)) != null && persona.Data.get(categories_colon.get(j)).length() != 0) {
-                            entries.add(fhiRresources.observationIpcResourceFHIR(
-                                    persona.DNI,
-                                    persona.Data.get(context.getString(R.string.efector)),
-                                    categories_colon.get(j),
-                                    categories_colon.get(j),
-                                    persona.Fecha,
-                                    data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
-                                    data_encuestador.get("DNI"),
-                                    persona.Data.get(categories_colon.get(j)),
-                                    persona.Data.get(categories_colon.get(j))
-                            ));
-                        }
-                    }
-                }
-
-                // datos de hpv
-                if (persona.Data.get(context.getString(R.string.realizo_test_hpv)) != null && persona.Data.get(context.getString(R.string.realizo_test_hpv)).length() != 0) {
-                    entries.add(fhiRresources.observationIpcResourceFHIR(
-                            persona.DNI,
-                            persona.Data.get(context.getString(R.string.efector)),
-                            context.getString(R.string.realizo_test_hpv),
-                            context.getString(R.string.realizo_test_hpv),
-                            persona.Fecha,
-                            data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
-                            data_encuestador.get("DNI"),
-                            persona.Data.get(context.getString(R.string.realizo_test_hpv)),
-                            persona.Data.get(context.getString(R.string.realizo_test_hpv))));
-                }
-
-            }*/
             values.add(fhiRresources.Bundle(entries).toString());
             Log.e("datos finales", values.get(values.size() - 1));
         }
@@ -608,7 +524,7 @@ public class FHIR {
                         renuentesdeshabitadas.get(i).Fecha,
                         data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
                         data_encuestador.get("DNI"),
-                        renuentesdeshabitadas.get(i).Data.get(data_send_renuente_deshabitada.get(j)),
+                        removeIndent(renuentesdeshabitadas.get(i).Data.get(data_send_renuente_deshabitada.get(j))),
                         renuentesdeshabitadas.get(i).Data.get(data_send_renuente_deshabitada.get(j))));
                 Log.e("renuente", renuentesdeshabitadas.get(i).Data.get(data_send_renuente_deshabitada.get(j)));
             }
@@ -617,4 +533,59 @@ public class FHIR {
 
         return values;
     }
+
+    public static String convertStringDateToDateNacimiento(String stringDate) {
+
+        // Crear un formato de fecha que coincida con el formato del string de entrada
+        SimpleDateFormat sdfInput = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Convertir el string de fecha a una fecha
+        Date date = null;
+        try {
+            date = sdfInput.parse(stringDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Crear un formato de fecha que coincida con el formato de salida
+        SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Convertir la fecha a un string en el formato de salida
+        Log.e("marca 0", sdfOutput.format(date));
+        return sdfOutput.format(date);
+    }
+
+    public static String convertStringDateToDateeffectiveDateTime(String stringDate) {
+
+        // Crear un formato de fecha que coincida con el formato del string de entrada
+        SimpleDateFormat sdfInput = new SimpleDateFormat("dd MMM yyyy");
+
+        // Convertir el string de fecha a una fecha
+        Date date = null;
+        try {
+            date = sdfInput.parse(stringDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Crear un formato de fecha que coincida con el formato de salida
+        SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Convertir la fecha a un string en el formato de salida
+        Log.e("marca 0", sdfOutput.format(date));
+        return sdfOutput.format(date);
+    }
+
+    public static String removeIndent(String string) {
+
+        // Crear un patrón de expresión regular que coincida con el indentado
+        Pattern pattern = Pattern.compile("^\\s*");
+
+        // Crear un objeto Matcher para extraer el indentado del string
+        Matcher matcher = pattern.matcher(string);
+
+        // Eliminar el indentado del string
+        return matcher.replaceAll("");
+    }
+
 }

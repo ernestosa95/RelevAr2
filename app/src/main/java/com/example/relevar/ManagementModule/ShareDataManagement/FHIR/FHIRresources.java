@@ -135,10 +135,10 @@ public class FHIRresources {
             JSONArray performer = new JSONArray()
                     .put(new JSONObject()
                             .put("display", name_prof)
-                            .put("identifier", new JSONArray().put(new JSONObject()
+                            .put("identifier", new JSONObject()
                                     .put("use", "official")
                                     .put("system", "RelevAr")
-                                    .put("value", dni_prof))));
+                                    .put("value", dni_prof)));
             obj.put("performer", performer);
 
             JSONObject valueCodeableConcept = new JSONObject()
