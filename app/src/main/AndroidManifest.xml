@@ -39,9 +39,6 @@
         <activity
             android:name=".ManagementModule.ShareDataManagement.Bluetooth"
             android:exported="false" />
-        <activity
-            android:name=".MenuVisualizacionDatos"
-            android:exported="true" />
         <activity android:name=".ButtonsDeclarationFamiliarUnity.AedesButton" />
         <activity android:name=".ManagementModule.QRScannerManagement.ScannerQR" />
         <activity
@@ -53,9 +50,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuMapa" />
-        <activity android:name=".MenuPersona" />
-        <activity android:name=".MenuFamilia" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
