@@ -18,6 +18,7 @@ import com.example.relevar.ButtonsDeclarationPersonal.General.BotonHpv22;
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonScreningCancer22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonAcompañamiento22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonOcio22;
+import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonSaludMental22;
 import com.example.relevar.R;
 
 import java.lang.reflect.InvocationTargetException;
@@ -168,6 +169,15 @@ public class ButtonDeclaration {
         ButtonsViews.put(title, generateBtnMenu(R.drawable.asistenciasocial,title));
         // Se le da el comportamiento al boton
         buttons.put(title, new BotonAcompañamiento22(context, ButtonsViews.get(title), title));
+
+        // DEFINO EL BOTON DE REGISTRO DE CONSTANTES VITALES
+        // Agregar al vector que corresponda el nombre del boton
+        title = "SALUD MENTAL";
+        PersonButtonsPsico.add(title);
+        // Agrego el boton al menu de opciones
+        ButtonsViews.put(title, generateBtnMenu(R.drawable.asistenciasocial,title));
+        // Se le da el comportamiento al boton
+        buttons.put(title, new BotonSaludMental22(context, ButtonsViews.get(title), title));
 
         PersonButtons.addAll(PersonButtonsGeneral);
         PersonButtons.addAll(PersonButtonsEstadoFisico);

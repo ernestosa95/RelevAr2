@@ -27,7 +27,7 @@ public class FHIRresources {
             gender_data = "male";
         } else if (gender_data.equals("F")){
             gender_data = "female";
-        } else { gender_data = ""; }
+        } else { gender_data = "other"; }
 
         try {
             obj.put("resourceType", "Patient");

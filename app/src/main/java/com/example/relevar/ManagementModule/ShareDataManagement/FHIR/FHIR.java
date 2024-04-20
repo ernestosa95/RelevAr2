@@ -121,35 +121,6 @@ public class FHIR {
         //String url = "http://192.168.1.111:5000/json";
 
         //------------------------------------------------------------------------------------------
-        // Ingresar datos a GNUHealth
-        /*StringRequest stringRequestGNU = new StringRequest(Request.Method.POST, str_url+"_gnu", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("msj0", "posta 0");
-                Toast.makeText(context, context.getString(R.string.confirm_send), Toast.LENGTH_SHORT).show();
-                progress.setProgress(100);
-                progress.dismiss();
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                Log.e("mj1", error.toString());
-                Toast.makeText(context, context.getString(R.string.error_send) +" onresponse", Toast.LENGTH_SHORT).show();
-                progress.dismiss();
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<>();
-                return params;
-            }
-        };
-        stringRequestGNU.setRetryPolicy(new DefaultRetryPolicy(
-                persons*2000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));*/
-        //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
         // Envio de los datos
         StringRequest stringRequestData = new StringRequest(Request.Method.POST, str_url, new Response.Listener<String>() {
@@ -254,103 +225,6 @@ public class FHIR {
         String value = pass + id + "RelevAr" + "2020" + "UNER";
         return value.substring(0, 16);
     }
-
-//--------------------------------------------------------------------------------------------------
-    /*public JSONObject data_send() {
-
-        JSONObject data = new JSONObject();
-
-        ArrayList<JSONObject> entries = new ArrayList<>();
-        familia.LoadDataHashToParameters();
-        persona.DNI = persona.DNI.replace(" ","");
-        entries.add(fhiRresources.patientResourceFHIR(
-                                            persona.DNI,
-                                            persona.Nombre.split(" "),
-                                            persona.Apellido,
-                                            persona.Sexo,
-                                            persona.Nacimiento,
-                                            familia.calle,
-                                            "",
-                                            "",
-                                            "AR",
-                                            encuestador.Provincia,
-                                            Double.parseDouble(familia.Latitud),
-                                            Double.parseDouble(familia.Longitud),
-                                            familia.numero,
-                                            familia.TelefonoFamiliar
-        ));
-
-        String code_du = familia.Latitud + ' ' + familia.Longitud;
-        ArrayList<String> data2send = new ArrayList<>();
-        data2send.add("TIPO DE VIVIENDA");
-        data2send.add("ORIGEN AGUA");
-        data2send.add("AGUA");
-        data2send.add("BAÑO");
-        data2send.add("EL BAÑO TIENE");
-        data2send.add("EXCRETAS");
-        data2send.add("MATERIAL PREDOMINANTE EN LAS PAREDES EXTERIORES");
-        data2send.add("MATERIAL PREDOMINANTE EN LA CUBIERTA EXTERIOR DEL TECHO");
-        data2send.add("MATERIAL DE LOS PISOS");
-        data2send.add("MENORES");
-        //data2send.add("USA PARA COCINAR");
-        data2send.add("CANTIDAD DE PIEZAS");
-
-        Date date = new Date();
-        String fecha = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
-        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy/mm/dd");
-        try {
-             date = sdf.parse(persona.Fecha);
-             fecha = newFormat.format(date);
-             //String[] aux = fecha.split("/");
-             //fecha = aux[0]+"/"+Integer.toString(Integer.parseInt(aux[1])+1)+"/"+aux[2];
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-
-        // Enviar datos relacionados con terreno de sangre en materia fecal
-        // Datos a enviar
-        ArrayList<String> categories_colon = new ArrayList<>();
-        categories_colon.add(context.getString(R.string.antecedentes_cancer_colon));
-        categories_colon.add(context.getString(R.string.sintomas_cancer_colon));
-        categories_colon.add(context.getString(R.string.prueba_cancer_colon));
-        categories_colon.add(context.getString(R.string.razon_no_prueba_colon));
-
-        for (int i=0; i<categories_colon.size(); i++){
-            if (persona.Data.containsKey(categories_colon.get(i))) {
-                if (persona.Data.get(categories_colon.get(i)) != null && persona.Data.get(categories_colon.get(i)).length() != 0) {
-                    entries.add(fhiRresources.observationIpcResourceFHIR(
-                            persona.DNI,
-                            persona.Data.get(context.getString(R.string.efector)),
-                            categories_colon.get(i),
-                            categories_colon.get(i),
-                            persona.Fecha,
-                            encuestador.Nombre+" "+encuestador.Apellido,
-                            encuestador.DNI,
-                            persona.Data.get(categories_colon.get(i)),
-                            persona.Data.get(categories_colon.get(i))
-                    ));
-                }
-            }
-        }
-
-        // datos de hpv
-        if (persona.Data.get(context.getString(R.string.realizo_test_hpv)) != null && persona.Data.get(context.getString(R.string.realizo_test_hpv)).length() != 0) {
-            entries.add(fhiRresources.observationIpcResourceFHIR(
-                    persona.DNI,
-                    persona.Data.get(context.getString(R.string.efector)),
-                    context.getString(R.string.realizo_test_hpv),
-                    context.getString(R.string.realizo_test_hpv),
-                    persona.Fecha,
-                    encuestador.Nombre + " " + encuestador.Apellido,
-                    encuestador.DNI,
-                    persona.Data.get(context.getString(R.string.realizo_test_hpv)),
-                    persona.Data.get(context.getString(R.string.realizo_test_hpv))));
-        }
-
-        data = fhiRresources.Bundle(entries);
-        return data;
-    }*/
 
 //--------------------------------------------------------------------------------------------------
     private ArrayList<String> Bundles2SendUbication () throws JSONException {
@@ -462,7 +336,7 @@ public class FHIR {
                                         convertStringDateToDateeffectiveDateTime(persona.Fecha),
                                         data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
                                         data_encuestador.get("DNI"),
-                                        removeIndent(persona.Data.get(datos_enviar_evaluacion_du.get(j)).replace("    ", " ")),
+                                        removeIndent(persona.Data.get(datos_enviar_evaluacion_du.get(j)).replace("    ", " ").replace(". ", "")),
                                         persona.Data.get(datos_enviar_evaluacion_du.get(j))));
                             }
                         }
@@ -476,7 +350,7 @@ public class FHIR {
                                         convertStringDateToDateeffectiveDateTime(persona.Fecha),
                                         data_encuestador.get("NOMBRE") + " " + data_encuestador.get("APELLIDO"),
                                         data_encuestador.get("DNI"),
-                                        removeIndent(familia.Data.get(datos_enviar_evaluacion_du.get(j))).replace("    ", " "),
+                                        removeIndent(familia.Data.get(datos_enviar_evaluacion_du.get(j))).replace("    ", " ").replace(". ", ""),
                                         familia.Data.get(datos_enviar_evaluacion_du.get(j))));
                             }
                         }
