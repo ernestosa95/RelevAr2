@@ -64,11 +64,8 @@ public class BotonSaludMental22 implements Serializable {
         //Crear el linerLayout que va a contener las diferentes categorias
         LinearLayout lyOptions = view.findViewById(R.id.LYGralOptions);
 
-        View RE6 = buttonViewBasic.generateOptionsCheckbox(context, options.get("RE6_0"), buttonViewBasic.getSubOptions(options, "RE6"));
-        lyOptions.addView(RE6);
-
-        View RE7 = buttonViewBasic.generateTextEdit(options.get("RE7_0"), context);
-        lyOptions.addView(RE7);
+        View RE46 = buttonViewBasic.generateSpinnerMultipleSelect(options.get("RE46_0"), buttonViewBasic.getSubOptions(options, "RE46"));
+        lyOptions.addView(RE46);
 
         //Boton guardar
         Button guardar = view.findViewById(R.id.GUARDARGrl);
@@ -76,8 +73,8 @@ public class BotonSaludMental22 implements Serializable {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.putAll(buttonViewBasic.getValueCheckBox(RE6));
-                data.put("RE7_0", buttonViewBasic.getValueText(RE7));
+
+                data.put("RE46_0", buttonViewBasic.getValueSpiner(RE46));
 
                 adminBData.updateCacheUD(data);
                 ColorAvance(data);

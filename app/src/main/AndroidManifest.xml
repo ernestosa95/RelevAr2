@@ -18,6 +18,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,6 +30,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service
+            android:name=".ManagementModule.UbicationManagement.ServicioGPS"
+            android:foregroundServiceType="location"
+            android:exported="false">
+        </service>
+
         <activity
             android:name=".ManagementModule.Export.Export"
             android:exported="true">
@@ -61,7 +71,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <service android:name=".ManagementModule.UbicationManagement.ServicioGPS" />
+        <!--<service android:name=".ManagementModule.UbicationManagement.ServicioGPS" />-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
