@@ -79,19 +79,19 @@ public class MenuInicio extends AppCompatActivity {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         }
 
-        Button btnUrl = findViewById(R.id.BTNURL);
+        //Button btnUrl = findViewById(R.id.BTNURL);
         String urlString = "https://drive.google.com/drive/folders/1-N3vJG2IOSBu0Pjnl8s29bPoyPkV1W_s?usp=sharing";
-        btnUrl.setOnClickListener(new View.OnClickListener() {
+        /*btnUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Uri link = Uri.parse(urlString);
                 Intent i = new Intent(Intent.ACTION_VIEW, link);
                 startActivity(i);
             }
-        });
+        });*/
 
         TextView version = findViewById(R.id.versionTXT);
-        version.setText(BuildConfig.VERSION_NAME);
+        version.setText("1.0.0");
 
 
         //encuestador.archivos.RecuperarDatosCsv();
