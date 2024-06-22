@@ -179,12 +179,32 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
         bdUbicationMannager.createUbicationTable();
         bdUbicationMannager.close();
 
+        //Manejo de las interfaces
         ConstraintLayout VerMapa = (ConstraintLayout) findViewById(R.id.VerMapa);
+        ImageButton centrar = (ImageButton) findViewById(R.id.IMGBTCENTRAR);
+        TextView centrartxt = (TextView) findViewById(R.id.textView17);
+        TextView opttex = (TextView) findViewById(R.id.textView11);
+        ConstraintLayout btnMapa = (ConstraintLayout) findViewById(R.id.RECORRIDOCL);
+        ImageView imgOpt = (ImageView) findViewById(R.id.imageView10);
         VerMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VerMapa.setVisibility(View.GONE);
+                if (opttex.getText().equals("VER EL MAPA")){
                 mapView.setVisibility(View.VISIBLE);
+                centrar.setVisibility(View.VISIBLE);
+                centrartxt.setVisibility(View.VISIBLE);
+                opttex.setText("VER SEGUIMIENTOS");
+                btnMapa.setVisibility(View.VISIBLE);
+                imgOpt.setImageResource(R.drawable.background_blue);}
+                else {
+                    mapView.setVisibility(View.GONE);
+                    opttex.setText("VER EL MAPA");
+                    imgOpt.setImageResource(R.drawable.mapa);
+                    mapView.setVisibility(View.GONE);
+                    centrar.setVisibility(View.GONE);
+                    centrartxt.setVisibility(View.GONE);
+                    btnMapa.setVisibility(View.GONE);
+                }
             }
         });
     }

@@ -56,7 +56,7 @@ public class PollsterClass extends Activity implements Serializable {
                                     "MENDOZA","SAN JUAN","LA PAMPA","CHACO","CORRIENTES","MISIONES","FORMOSA",
                                     "SANTIAGO DEL ESTERO","SAN LUIS","LA RIOJA","SALTA","JUJUY","NEUQUÉN");*/
 
-    private List<String> FamilyButtons = new ArrayList<String>(Arrays.asList("DENGUE"));//,"VIVIENDA""INSPECCION EXTERIOR","SERVICIOS BASICOS"
+    private List<String> FamilyButtons = new ArrayList<String>();//Arrays.asList("DENGUE"),"VIVIENDA""INSPECCION EXTERIOR","SERVICIOS BASICOS"
 
     private List<String> PersonButtons = new ArrayList<String>(Arrays.asList());
 

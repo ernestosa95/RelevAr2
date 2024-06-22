@@ -243,7 +243,8 @@
                 android:layout_height="180dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/fondo2"
-                android:onClick="Dengue">
+                android:onClick="Dengue"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ICONOSDENGUE"
