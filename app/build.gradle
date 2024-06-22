@@ -57,5 +57,6 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     implementation 'org.quanqi:android-holo-graph:0.1.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
 }

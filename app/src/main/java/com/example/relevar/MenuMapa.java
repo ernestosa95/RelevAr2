@@ -178,6 +178,15 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
         BDUbicationManager bdUbicationMannager = new BDUbicationManager(this, "BDData", null, 1);
         bdUbicationMannager.createUbicationTable();
         bdUbicationMannager.close();
+
+        ConstraintLayout VerMapa = (ConstraintLayout) findViewById(R.id.VerMapa);
+        VerMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VerMapa.setVisibility(View.GONE);
+                mapView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void SelectDate(View view){
