@@ -16,6 +16,7 @@ import com.example.relevar.ButtonsDeclarationPersonal.EstadoFisico.BotonEnfermed
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonColon22;
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonHpv22;
 import com.example.relevar.ButtonsDeclarationPersonal.General.BotonScreningCancer22;
+import com.example.relevar.ButtonsDeclarationPersonal.General.BotonSeguimiento22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonAcompañamiento22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonOcio22;
 import com.example.relevar.ButtonsDeclarationPersonal.PsicoSocial.BotonSaludMental22;
@@ -85,7 +86,7 @@ public class ButtonDeclaration {
         //------------------------------------------------------------------------------------------
         // DEFINICION DEL BOTON SCRENING
         // Agregar al vector que corresponda el nombre del boton
-        title = "SCREENING CANCER";
+        /*title = "SCREENING CANCER";
         PersonButtonsGeneral.add(title);
         // Agrego el boton al menu de opciones
         ButtonsViews.put(title, generateBtnMenu(R.drawable.screning,title));
@@ -177,7 +178,17 @@ public class ButtonDeclaration {
         // Agrego el boton al menu de opciones
         ButtonsViews.put(title, generateBtnMenu(R.drawable.asistenciasocial,title));
         // Se le da el comportamiento al boton
-        buttons.put(title, new BotonSaludMental22(context, ButtonsViews.get(title), title));
+        buttons.put(title, new BotonSaludMental22(context, ButtonsViews.get(title), title));*/
+
+        //------------------------------------------------------------------------------------------
+        // DEFINO EL BOTON DE SEGUIMIENTO
+        // Agregar al vector que corresponda el nombre del boton
+        title = "SEGUIMIENTOS";
+        PersonButtonsGeneral.add(title);
+        // Agrego el boton al menu de opciones
+        ButtonsViews.put(title, generateBtnMenu(R.drawable.acompanar,title));
+        // Se le da el comportamiento al boton
+        buttons.put(title, new BotonSeguimiento22(context, ButtonsViews.get(title), title));
 
         PersonButtons.addAll(PersonButtonsGeneral);
         PersonButtons.addAll(PersonButtonsEstadoFisico);

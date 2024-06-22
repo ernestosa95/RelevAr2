@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.relevar.ManagementModule.StorageManagement.BDData;
 import com.example.relevar.ManagementModule.ShareDataManagement.Archivos;
+import com.example.relevar.ManagementModule.StorageManagement.EfectoresSearchAdapter;
 import com.example.relevar.ManagementModule.StorageManagement.SQLitePpal;
 import com.example.relevar.BasicObjets.PollsterClass;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -38,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
@@ -191,6 +194,13 @@ public class MenuInicio extends AppCompatActivity {
         final EditText ApellidoEncuestador = view_nuevo_usuario.findViewById(R.id.editApellidoEncuestador);
         final EditText DNI = view_nuevo_usuario.findViewById(R.id.editDNI);
 
+        // AUTOCOMPLETE TEXTVIEW DE LOS TRABAJOS
+        AutoCompleteTextView autoEfector = view_nuevo_usuario.findViewById(R.id.autoEfector);
+        List<String> efectores = new ArrayList<String>();
+        EfectoresSearchAdapter searchAdapter = new EfectoresSearchAdapter(this, efectores);
+        autoEfector.setThreshold(1);
+        autoEfector.setAdapter(searchAdapter);
+
         /*Creo y asigno las funciones al boton de crear encuentador, corroboro que ninguno de los
         campos este vacio, desactivo todos los encuestadores y luego inserto en la base de datos el
         nuevo, activandolo, paso siguiente paso la app a la activity MenuMapa*/
@@ -205,6 +215,7 @@ public class MenuInicio extends AppCompatActivity {
                                                             ApellidoEncuestador.getText().toString(),
                                                             DNI.getText().toString(),
                                                             SPProvincias.getSelectedItem().toString());
+                                admin.UpdateEncuestador(encuestador.DNI, encuestador.EfectorTrabajo);
 
                         // Creo en segundo plano las bases de datos correspondientes a este
                         // encuestador

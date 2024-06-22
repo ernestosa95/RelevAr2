@@ -43,6 +43,8 @@ public class BDData extends SQLiteOpenHelper {
     final String CREATE_CACHE = "CREATE TABLE CACHE (TEXT FECHA)";
     final String CREATE_DOMICILIO = "CREATE TABLE DOMICILIO (LATITUD TEXT, LONGITUD TEXT, FECHA TEXT)";
     final String CREATE_CACHE_UD = "CREATE TABLE CACHEUD (CODE TEXT, VALUE TEXT)";
+
+    //final String CREATE_DOMICILIARY_UNIT = "CREATE TABLE DOMICILIARY_UNIT (UD_ID TEXT, LATITUD TEXT, LONGITUD TEXT)";
     Archivos archivos;
 
     public BDData(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {

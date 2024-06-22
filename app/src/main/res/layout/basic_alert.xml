@@ -10,14 +10,14 @@
         android:id="@+id/GRLCabecera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlueLigth">
+        android:background="@color/colorBlue">
 
         <TextView
             android:id="@+id/TXTGralCabecera"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:background="@color/colorBlueLigth"
+            android:background="@color/colorBlue"
             android:gravity="center_vertical"
             android:text="text"
             android:textColor="#FFFFFF"
@@ -31,7 +31,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_margin="5dp"
-            android:background="@drawable/button_redondo_azul"
+            android:background="@drawable/button1"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
         android:layout_marginBottom="5dp"
         android:background="@drawable/button1"
         android:text="@string/guardar"
-        android:textColor="#4A4A4A"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

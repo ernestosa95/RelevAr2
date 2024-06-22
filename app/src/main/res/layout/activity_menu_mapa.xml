@@ -236,7 +236,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Hola, Ernesto Ridel"
+            android:text="Hola, Nombre Apellido"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton"
             app:layout_constraintStart_toStartOf="parent"
