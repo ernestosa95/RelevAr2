@@ -171,6 +171,11 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
                 new IntentFilter("custom-event-name"));
 
         datesview.add(DateFormat.getDateInstance().format(new Date()));
+        ArrayList<String> dates = adminBDData.Dates();
+        if(!dates.contains(DateFormat.getDateInstance().format(new Date()))) {
+            dates.add(DateFormat.getDateInstance().format(new Date()));
+        }
+        datesview.addAll(dates);
 
         cantFamiliasCercanas = findViewById(R.id.TEXTVIEWCANTCERCANOS);
         cantNotifications = findViewById(R.id.TEXTVIEWNUMBERMSG);
@@ -530,7 +535,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
     }
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-    public void Compartir(View view) {
+    public void Compartir() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater Inflater = getLayoutInflater();
         View view1 = Inflater.inflate(R.layout.share_files, null);
@@ -926,6 +931,7 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
 
                 ArrayList<LatLng> marcadores = new ArrayList<>();
                 ArrayList<String> codigoColores = new ArrayList<>();
+
                 for (int i=0; i<datesview.size(); i++){
                     marcadores.addAll(adminBDData.SearchAllCordinatesForDate(datesview.get(i)));
                     if (marcadores.size()!=0){
@@ -1187,52 +1193,79 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
     //Configuraciones
     @SuppressLint("ResourceAsColor")
     public void Configurations(View view){
-        // Defino los contenedores
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MiEstiloAlert);
-        TextView textView = new TextView(this);
-        textView.setText(getString(R.string.configuraciones));
-        textView.setPadding(20, 30, 20, 30);
-        textView.setTextSize(16F);
-        textView.setHeight(100);
-        textView.setBackgroundColor(Color.parseColor("#4588BC"));
-        textView.setTextColor(Color.WHITE);
-        builder.setCustomTitle(textView);
-
-        // Defino el Layaout que va a contener a los Check
-        LinearLayout mainLayout = new LinearLayout(this);
-        mainLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(5,2,5,2);
-        layoutParams.gravity = 2;
-
-        Button btnButtons = new Button(this);
-        btnButtons.setText(getText(R.string.botones));
-        btnButtons.setBackgroundColor(R.color.colorImpar);
-        btnButtons.setLayoutParams(layoutParams);
-        mainLayout.addView(btnButtons);
-        btnButtons.setOnClickListener(view1 -> SwitchButtons());
-
-        Button btnNotifications = new Button(this);
-        btnNotifications.setText(getText(R.string.notificaciones));
-        btnNotifications.setBackgroundColor(R.color.colorImpar);
-        btnNotifications.setLayoutParams(layoutParams);
-        btnNotifications.setOnClickListener(view12 -> SwitchNotifications());
-        mainLayout.addView(btnNotifications);
-
-        builder.setPositiveButton("CERRAR", null);
-
-        // Defino un ScrollView para visualizar todos
-        ScrollView sv = new ScrollView(this);
-        sv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        sv.setVerticalScrollBarEnabled(true);
-        sv.addView(mainLayout);
-
-        builder.setView(sv);
-        // Create and show the alert dialog
-        AlertDialog dialog = builder.create();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater Inflater = LayoutInflater.from(this);
+        final View view_alert = Inflater.inflate(R.layout.alert_basic22, null);
+        view_alert.setFocusable(true);
+        builder.setView(view_alert);
+        builder.setCancelable(false);
+        final AlertDialog dialog = builder.create();
         dialog.show();
+
+        // Compartir
+        ConstraintLayout compartir = (ConstraintLayout) view_alert.findViewById(R.id.compartirBTN);
+        compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Compartir();
+            }
+        });
+
+        // Bluetooth
+        ConstraintLayout bth = (ConstraintLayout) view_alert.findViewById(R.id.bluetoothBTN);
+        bth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Bluetooth(view);
+                Toast.makeText(getBaseContext(), "No disponible", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Enviar
+        ConstraintLayout enviar = (ConstraintLayout) view_alert.findViewById(R.id.enviarBTN);
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendFHIR(view);
+            }
+        });
+
+        // Compartir mapa
+        ConstraintLayout cmapa = (ConstraintLayout) view_alert.findViewById(R.id.compartirmapaBTN);
+        cmapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareMap(view);
+            }
+        });
+
+        // Estadisticas
+        ConstraintLayout estadisticas = (ConstraintLayout) view_alert.findViewById(R.id.estadisticasBTN);
+        estadisticas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Statistics(view);
+            }
+        });
+
+        // Ubicaciones referencia
+        ConstraintLayout referencias = (ConstraintLayout) view_alert.findViewById(R.id.referenciasBTN);
+        referencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReferencePoints(view);
+            }
+        });
+
+        // Estadisticas
+        ImageView cerrar = (ImageView) view_alert.findViewById(R.id.cerrarBTN);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     @SuppressLint("ResourceAsColor")

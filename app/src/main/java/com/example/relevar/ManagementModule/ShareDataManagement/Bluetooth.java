@@ -4,7 +4,9 @@ import static android.bluetooth.BluetoothAdapter.getDefaultAdapter;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -13,6 +15,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -86,8 +89,7 @@ public class Bluetooth extends AppCompatActivity {
     private TextView indBt, indUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
@@ -98,8 +100,8 @@ public class Bluetooth extends AppCompatActivity {
         guardar = (Button) findViewById(R.id.button8);
         conectar = (Button) findViewById(R.id.button5);
         indUser = (TextView) findViewById(R.id.TEXTINDICACIONES);
-        lv = (ListView)findViewById(R.id.listView);
-        et=(EditText) findViewById(R.id.txtMessage);
+        lv = (ListView) findViewById(R.id.listView);
+        et = (EditText) findViewById(R.id.txtMessage);
         cbServer = (CheckBox) findViewById(R.id.cbServer);
         cbServer.setChecked(true);
 
@@ -109,16 +111,13 @@ public class Bluetooth extends AppCompatActivity {
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() //list onclick selection process
         {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                if(DEVICES_IN_LIST)
-                {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (DEVICES_IN_LIST) {
                     String name = (String) parent.getItemAtPosition(position);
                     selectBTdevice(name); //selected device will be set globally
                     //Toast.makeText(getApplicationContext(), "Selected " + name, Toast.LENGTH_SHORT).show();
                     //do not automatically call OpenBT(null) because makes troubles with server/client selection
-                }
-                else //message is selected
+                } else //message is selected
                 {
                     String message = (String) parent.getItemAtPosition(position);
                     et.setText(message);
@@ -138,7 +137,7 @@ public class Bluetooth extends AppCompatActivity {
 
         imgBt = (ImageButton) findViewById(R.id.BUTTONBT);
         indBt = (TextView) findViewById(R.id.INDICADORBT);
-        if (!adapter.isEnabled()){
+        if (!adapter.isEnabled()) {
             imgBt.setBackground(getDrawable(R.drawable.button_redondo_rojo));
             indBt.setText("APAGADO");
             disp.setVisibility(View.GONE);
@@ -148,7 +147,7 @@ public class Bluetooth extends AppCompatActivity {
             guardar.setVisibility(View.GONE);
             listItems.clear();
             indUser.setText("Encienda el Bluetooth");
-        }else{
+        } else {
             imgBt.setBackground(getDrawable(R.drawable.button_redondo_azul));
             indBt.setText("ENCENDIDO");
             disp.setVisibility(View.VISIBLE);
@@ -161,8 +160,8 @@ public class Bluetooth extends AppCompatActivity {
         }
     }
 
-    public void ONOF(View view){
-        if (adapter.isEnabled()){
+    public void ONOF(View view) {
+        if (adapter.isEnabled()) {
             imgBt.setBackground(getDrawable(R.drawable.button_redondo_rojo));
             indBt.setText("APAGADO");
             disp.setVisibility(View.GONE);
@@ -173,7 +172,7 @@ public class Bluetooth extends AppCompatActivity {
             indUser.setText("Encienda el Bluetooth");
             lv.setVisibility(View.GONE);
             off(null);
-        }else{
+        } else {
             imgBt.setBackground(getDrawable(R.drawable.button_redondo_azul));
             indBt.setText("ENCENDIDO");
             disp.setVisibility(View.VISIBLE);
@@ -191,10 +190,10 @@ public class Bluetooth extends AppCompatActivity {
         ArrayList<FamiliarUnityClass> allFamilies = new ArrayList<>();
         allFamilies = adminBDData.SearchAllFamilies(this);
         JSONArray families = new JSONArray();
-        for (FamiliarUnityClass family : allFamilies){
+        for (FamiliarUnityClass family : allFamilies) {
             Object[] keys = family.Data.keySet().toArray();
             JSONObject familyjson = new JSONObject();
-            for (Object key : keys){
+            for (Object key : keys) {
                 familyjson.put(key.toString(), family.Data.get(key.toString()));
             }
             families.put(familyjson);
@@ -204,10 +203,10 @@ public class Bluetooth extends AppCompatActivity {
         ArrayList<PersonClass> allPersons = new ArrayList<>();
         allPersons = adminBDData.SearchAllPersons(this);
         JSONArray persons = new JSONArray();
-        for (PersonClass person : allPersons){
+        for (PersonClass person : allPersons) {
             Object[] keys = person.Data.keySet().toArray();
             JSONObject personjson = new JSONObject();
-            for (Object key : keys){
+            for (Object key : keys) {
                 personjson.put(key.toString(), person.Data.get(key.toString()));
             }
             persons.put(personjson);
@@ -222,14 +221,12 @@ public class Bluetooth extends AppCompatActivity {
 
     public void openBT(View v) //opens right thread for server or client
     {
-        if(adapter == null)
-        {
+        if (adapter == null) {
             adapter = getDefaultAdapter();
             Log.i(TAG, "Backup way of getting adapter was used!");
         }
 
-        if (!adapter.isEnabled())
-        {
+        if (!adapter.isEnabled()) {
             Log.i(TAG, "BT device is turned off! Turning on...");
             on(null); //chat doesnt work when BT is off...
         }
@@ -239,18 +236,15 @@ public class Bluetooth extends AppCompatActivity {
         is = null; //resetting if was used previously
         os = null; //resetting if was used previously
 
-        if(pairedDevices.isEmpty() || remoteDevice == null)
-        {
+        if (pairedDevices.isEmpty() || remoteDevice == null) {
             Toast.makeText(this, "Paired device is not selected, choose one", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(cbServer.isChecked())
-        {
+        if (cbServer.isChecked()) {
             //Toast.makeText(getApplicationContext(), "This device is server" ,Toast.LENGTH_SHORT).show();
             new Thread(serverListener).start();
-        }
-        else //CLIENT
+        } else //CLIENT
         {
             //Toast.makeText(getApplicationContext(), "This device is client" ,Toast.LENGTH_SHORT).show();
             new Thread(clientConnecter).start();
@@ -266,17 +260,26 @@ public class Bluetooth extends AppCompatActivity {
         CONNECTION_ENSTABLISHED = false;
 
         if (is != null) {
-            try {is.close();} catch (Exception e) {}
+            try {
+                is.close();
+            } catch (Exception e) {
+            }
             is = null;
         }
 
         if (os != null) {
-            try {os.close();} catch (Exception e) {}
+            try {
+                os.close();
+            } catch (Exception e) {
+            }
             os = null;
         }
 
         if (socket != null) {
-            try {socket.close();} catch (Exception e) {}
+            try {
+                socket.close();
+            } catch (Exception e) {
+            }
             socket = null;
         }
 
@@ -286,43 +289,37 @@ public class Bluetooth extends AppCompatActivity {
             mHandler.removeCallbacksAndMessages(serverListener);
             mHandler.removeCallbacksAndMessages(clientConnecter);
             Log.i(TAG, "Threads ended...");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e(TAG, "Attemp for closing threads was unsucessfull.");
         }
 
-        Toast.makeText(getApplicationContext(), "Communication closed" ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Communication closed", Toast.LENGTH_SHORT).show();
 
         list(null); //shows list for reselection
         et.setText("demo text");
     }
 
-    private Runnable serverListener = new Runnable()
-    {
-        public void run()
-        {
+    private Runnable serverListener = new Runnable() {
+        public void run() {
             try //opening of BT connection
             {
                 //problematic with older phones... HELP: Change server/client orientation...
                 //but solves: BluetoothAdapter: getBluetoothService() called with no BluetoothManagerCallback
 
                 android.util.Log.i("TrackingFlow", "Server socket: new way used...");
-                socket =(BluetoothSocket) remoteDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(remoteDevice,1);
+                socket = (BluetoothSocket) remoteDevice.getClass().getMethod("createRfcommSocket", new Class[]{int.class}).invoke(remoteDevice, 1);
                 socket.connect();
                 CONNECTION_ENSTABLISHED = true; //protect from failing
 
-            } catch(Exception e) //obsolete way how to open BT
+            } catch (Exception e) //obsolete way how to open BT
             {
-                try
-                {
+                try {
                     android.util.Log.e("TrackingFlow", "Server socket: old way used...");
                     BluetoothServerSocket tmpsocket = adapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
                     socket = tmpsocket.accept();
                     CONNECTION_ENSTABLISHED = true; //protect from failing
                     android.util.Log.i("TrackingFlow", "Listening...");
-                }
-                catch (Exception ie)
-                {
+                } catch (Exception ie) {
                     Log.e(TAG, "Socket's accept method failed", ie);
                     ie.printStackTrace();
                 }
@@ -350,7 +347,8 @@ public class Bluetooth extends AppCompatActivity {
                     bSend.setVisibility(View.GONE);
                     cbServer.setVisibility(View.GONE);
                     listAdapter.notifyDataSetChanged();
-                }});
+                }
+            });
 
             try //reading part
             {
@@ -362,14 +360,13 @@ public class Bluetooth extends AppCompatActivity {
                 int bytesRead = -1;
                 byte[] buffer = new byte[bufferSize];
 
-                while(CONTINUE_READ_WRITE) //Keep reading the messages while connection is open...
+                while (CONTINUE_READ_WRITE) //Keep reading the messages while connection is open...
                 {
                     final StringBuilder sb = new StringBuilder();
                     bytesRead = is.read(buffer);
                     if (bytesRead != 0) {
                         String result = "";
-                        while ((bytesRead == bufferSize) && (buffer[bufferSize-1] != 0))
-                        {
+                        while ((bytesRead == bufferSize) && (buffer[bufferSize - 1] != 0)) {
                             String aux = new String(buffer, 0, bytesRead);
                             result = result + aux;
                             dataString.add(aux);
@@ -386,7 +383,7 @@ public class Bluetooth extends AppCompatActivity {
                             //Toast.makeText(Bluetooth.this, sb.toString(), Toast.LENGTH_SHORT).show();
 
                             msgCompleto[0] += sb.toString();
-                            Log.e("msg completo0",msgCompleto[0] );
+                            Log.e("msg completo0", msgCompleto[0]);
                             Log.e("lon completo0", Integer.toString(msgCompleto[0].length()));
                             guardar.setVisibility(View.VISIBLE);
                             bSend.setVisibility(View.GONE);
@@ -398,20 +395,19 @@ public class Bluetooth extends AppCompatActivity {
 
                 }
 
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 Log.e(TAG, "Server not connected...");
                 e.printStackTrace();
             }
         }
     };
 
-    public void GuardarDataView(View view){
+    public void GuardarDataView(View view) {
         Bluetooth.BdEfectores bdEfectores = new Bluetooth.BdEfectores();
         bdEfectores.execute();
     }
 
-    public void GuardarData(){
+    public void GuardarData() {
         int cont_repetidos_familia = 0;
         int cont_repetidos_persona = 0;
         int cont_guardados_familia = 0;
@@ -419,9 +415,9 @@ public class Bluetooth extends AppCompatActivity {
 
         try {
 
-            String aux = msgCompleto[0]+"}";
+            String aux = msgCompleto[0] + "}";
             String[] values = aux.split("HOYO");
-            for (String val : values){
+            for (String val : values) {
                 Log.e("val txt", val);
             }
             Log.e("msg completo3", Integer.toString(aux.length()));
@@ -429,36 +425,37 @@ public class Bluetooth extends AppCompatActivity {
             Log.e("json", jsonObject.toString());
 
             JSONArray familias = (JSONArray) jsonObject.get("FAMILIAS");
-            for (int i=0; i<familias.length(); i++){
+            for (int i = 0; i < familias.length(); i++) {
                 FamiliarUnityClass family = new FamiliarUnityClass(Bluetooth.this);
-                Map<String, String> mapObj = new Gson().fromJson(familias.get(i).toString(), new TypeToken<HashMap<String, Object>>() {}.getType());
+                Map<String, String> mapObj = new Gson().fromJson(familias.get(i).toString(), new TypeToken<HashMap<String, Object>>() {
+                }.getType());
                 family.Data = (HashMap<String, String>) mapObj;
-                Log.e("data busqueda", "data: "+family.Data.get("LONGITUD")+" "+family.Data.get("LATITUD")+" "+family.Data.get("FECHA"));
+                Log.e("data busqueda", "data: " + family.Data.get("LONGITUD") + " " + family.Data.get("LATITUD") + " " + family.Data.get("FECHA"));
                 if (!adminBDData.ExistRegisterFamily(family.Data.get("LONGITUD"), family.Data.get("LATITUD"), family.Data.get("FECHA"))) {
                     adminBDData.insert_family(family);
-                    cont_guardados_familia ++;
+                    cont_guardados_familia++;
                 } else {
-                    cont_repetidos_familia ++;
+                    cont_repetidos_familia++;
                 }
             }
 
             JSONArray personas = (JSONArray) jsonObject.get("PERSONAS");
-            for (int i=0; i<personas.length(); i++){
+            for (int i = 0; i < personas.length(); i++) {
                 PersonClass person = new PersonClass(Bluetooth.this);
-                Map<String, String> mapObj = new Gson().fromJson(personas.get(i).toString(), new TypeToken<HashMap<String, Object>>() {}.getType());
+                Map<String, String> mapObj = new Gson().fromJson(personas.get(i).toString(), new TypeToken<HashMap<String, Object>>() {
+                }.getType());
                 person.Data = (HashMap<String, String>) mapObj;
                 if (!adminBDData.ExistRegisterPerson(person.Data.get("DNI"), person.Data.get("FECHA"), person.Data.get("LATITUD"), person.Data.get("LONGITUD"))) {
                     adminBDData.insert_person(person);
-                    cont_guardados_personas ++;
+                    cont_guardados_personas++;
                 } else {
-                    cont_repetidos_persona ++;
+                    cont_repetidos_persona++;
                 }
             }
-            Log.e("msg completo1",msgCompleto[0] );
+            Log.e("msg completo1", msgCompleto[0]);
 
             //Toast.makeText(Bluetooth.this, "DATOS GUARDADOS", Toast.LENGTH_SHORT).show();
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             //Toast.makeText(Bluetooth.this, "ERROR" + e.toString(), Toast.LENGTH_SHORT).show();
             Log.e("eror conversion", e.toString());
             //Log.e("msg completo", msgCompleto[0]);
@@ -496,21 +493,17 @@ public class Bluetooth extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (pd != null)
-            {
+            if (pd != null) {
                 pd.dismiss();
             }
         }
 
     }
 
-    private Runnable clientConnecter = new Runnable()
-    {
+    private Runnable clientConnecter = new Runnable() {
         @Override
-        public void run()
-        {
-            try
-            {
+        public void run() {
+            try {
                 socket = remoteDevice.createRfcommSocketToServiceRecord(MY_UUID);
                 socket.connect();
                 CONNECTION_ENSTABLISHED = true; //protect from failing
@@ -536,7 +529,8 @@ public class Bluetooth extends AppCompatActivity {
                         bSend.setVisibility(View.VISIBLE);
                         cbServer.setVisibility(View.GONE);
                         listAdapter.notifyDataSetChanged();
-                    }});
+                    }
+                });
 
                 os = socket.getOutputStream();
                 is = socket.getInputStream();
@@ -547,15 +541,13 @@ public class Bluetooth extends AppCompatActivity {
                 int bytesRead = -1;
                 byte[] buffer = new byte[bufferSize];
 
-                while(CONTINUE_READ_WRITE) //Keep reading the messages while connection is open...
+                while (CONTINUE_READ_WRITE) //Keep reading the messages while connection is open...
                 {
                     final StringBuilder sb = new StringBuilder();
                     bytesRead = is.read(buffer);
-                    if (bytesRead != 0)
-                    {
+                    if (bytesRead != 0) {
                         String result = "";
-                        while ((bytesRead == bufferSize) && (buffer[bufferSize-1] != 0))
-                        {
+                        while ((bytesRead == bufferSize) && (buffer[bufferSize - 1] != 0)) {
                             result = result + new String(buffer, 0, bytesRead);
                             bytesRead = is.read(buffer);
                         }
@@ -574,9 +566,7 @@ public class Bluetooth extends AppCompatActivity {
                         }
                     });
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Log.e(TAG, "Client not connected...");
                 e.printStackTrace();
             }
@@ -589,12 +579,10 @@ public class Bluetooth extends AppCompatActivity {
         public void run() {
             while (CONTINUE_READ_WRITE) //reads from open stream
             {
-                try
-                {
+                try {
                     os.flush();
                     Thread.sleep(2000);
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.e(TAG, "Writer failed in flushing output stream...");
                     CONTINUE_READ_WRITE = false;
                 }
@@ -604,23 +592,18 @@ public class Bluetooth extends AppCompatActivity {
 
     public void sendBtnClick(View v) throws JSONException //sends text from text button
     {
-        if(CONNECTION_ENSTABLISHED == false)
-        {
+        if (CONNECTION_ENSTABLISHED == false) {
             Toast.makeText(getApplicationContext(), "Connection between devices is not ready.", Toast.LENGTH_SHORT).show(); //usually problem server-client decision
-        }
-        else
-        {
+        } else {
             //String textToSend = et.getText().toString() + "X"; //method is cutting last character, so way how to cheat it...
             String textToSend = DataToSend();
             byte[] b = textToSend.getBytes();
-            try
-            {
+            try {
                 os.write(b);
                 listItems.add(0, "Datos enviados"); //chat history
                 listAdapter.notifyDataSetChanged();
                 //et.setText(""); //remove text after sending
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), "Not sent", Toast.LENGTH_SHORT).show(); //usually problem server-client decision
             }
         }
@@ -628,13 +611,11 @@ public class Bluetooth extends AppCompatActivity {
 
     public void on(View v) //turning on BT when is off
     {
-        if (!adapter.isEnabled())
-        {
+        if (!adapter.isEnabled()) {
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOn, 0);
-            Toast.makeText(getApplicationContext(), "Turned on",Toast.LENGTH_SHORT).show();
-        } else
-        {
+            Toast.makeText(getApplicationContext(), "Turned on", Toast.LENGTH_SHORT).show();
+        } else {
             Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_SHORT).show();
         }
 
@@ -644,7 +625,7 @@ public class Bluetooth extends AppCompatActivity {
     public void off(View v) //turning off BT device on phone
     {
         adapter.disable();
-        Toast.makeText(getApplicationContext(), "Turned off" ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Turned off", Toast.LENGTH_SHORT).show();
     }
 
     public void visible(View v) //BT device discoverable
@@ -659,6 +640,16 @@ public class Bluetooth extends AppCompatActivity {
         listItems.clear(); //remove chat history
         listAdapter.notifyDataSetChanged();
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         pairedDevices = adapter.getBondedDevices(); //list of devices
 
         for(BluetoothDevice bt : pairedDevices) //foreach
