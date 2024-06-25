@@ -186,7 +186,7 @@ public class ButtonDeclaration {
         title = "SEGUIMIENTOS";
         PersonButtonsGeneral.add(title);
         // Agrego el boton al menu de opciones
-        ButtonsViews.put(title, generateBtnMenu(R.drawable.acompanar,title));
+        ButtonsViews.put(title, generateBtnMenu(R.drawable.amistoso,title));
         // Se le da el comportamiento al boton
         buttons.put(title, new BotonSeguimiento22(context, ButtonsViews.get(title), title));
 

@@ -65,6 +65,9 @@ public class BotonSeguimiento22 implements Serializable {
         //Crear el linerLayout que va a contener las diferentes categorias
         LinearLayout lyOptions = view.findViewById(R.id.LYGralOptions);
 
+        View RE60 = buttonViewBasic.generateRadioButtonYN(options.get("RE60_0"));
+        lyOptions.addView(RE60);
+
         View RE56 = buttonViewBasic.generateTextEdit(options.get("RE56_0"), context);
         lyOptions.addView(RE56);
 
@@ -88,6 +91,7 @@ public class BotonSeguimiento22 implements Serializable {
                 data.put("RE57_0", buttonViewBasic.getValueText(RE57));
                 data.put("RE58_0", buttonViewBasic.getValueText(RE58));
                 data.put("RE59_0", buttonViewBasic.getValueText(RE59));
+                data.put("RE60_0", buttonViewBasic.getValueRadio(RE60));
 
                 adminBData.updateCacheUD(data);
                 buttonViewBasic.buttonColor(context, title_button, layout, avanceTxt);

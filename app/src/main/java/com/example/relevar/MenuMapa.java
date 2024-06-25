@@ -182,6 +182,9 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
         //Saludo
         TextView saludo = (TextView) findViewById(R.id.textView24);
         saludo.setText("Hola, "+encuestador.Nombre+" "+encuestador.Apellido);
+
+        TextView seguimientos = (TextView) findViewById(R.id.textView27);
+        seguimientos.setText(adminBDData.getNumberSeguimientos());
     }
 
     public void SelectDate(View view){

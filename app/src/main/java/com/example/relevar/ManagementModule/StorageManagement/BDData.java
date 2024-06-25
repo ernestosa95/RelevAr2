@@ -84,7 +84,29 @@ public class BDData extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS CACHEUD (CODE TEXT, VALUE TEXT)");
         db.close();
     }
+    //----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+    //PERSONAS
+    //GET
+    public String getNumberSeguimientos(){
+        String value = "0";
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        String search = "SELECT * FROM PERSONS WHERE RE60_0 = 'SI'";
+        //Cursor registros = db.rawQuery(search, null);
+
+        try {
+            value = String.valueOf(db.rawQuery(search, null).getCount());
+        }catch (Exception e){
+            Log.e("error_seguimientos", e.toString());
+        }
+
+
+        db.close();
+        return value;
+    }
+
+    //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
     //AEDES
     public void CreateColumnsAedes(Context oldcontext){
