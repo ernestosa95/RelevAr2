@@ -422,6 +422,20 @@ public class BDData extends SQLiteOpenHelper {
             values.add(familyaux);
             registros.moveToNext();
         }
+
+        search = "SELECT * FROM FAMILIES WHERE SITUACION_HABITACIONAL='VACIA HAB.' AND FECHA='"+date+"'";
+        registros = db.rawQuery(search, null);
+
+        registros.moveToFirst();
+        for (int i=0; i<registros.getCount(); i++){
+            FamiliarUnityClass familyaux = new FamiliarUnityClass(context);
+            for (int j=0; j<registros.getColumnCount();j++){
+                familyaux.Data.put(registros.getColumnName(j),
+                        registros.getString(j));
+            }
+            values.add(familyaux);
+            registros.moveToNext();
+        }
         db.close();
 
         return values;
