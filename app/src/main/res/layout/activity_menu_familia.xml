@@ -27,6 +27,7 @@
             android:text="@string/modulos"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/TERMINAR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/TERMINAR" />
@@ -43,15 +44,19 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="150dp"
         android:layout_margin="5dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:background="@drawable/edit_text_1"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,6 +67,7 @@
             android:id="@+id/list1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/SITUACIONVIVIENDA"
             app:layout_constraintTop_toBottomOf="@+id/textView8"
             tools:layout_editor_absoluteX="-4dp">
@@ -72,10 +78,11 @@
             android:id="@+id/SITUACIONVIVIENDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
                 android:id="@+id/CHECKRENUENTE"
@@ -108,6 +115,7 @@
             android:background="@drawable/fondo2"
             android:elevation="10dp"
             android:onClick="NuevaPersona"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/list1">
@@ -155,6 +163,7 @@
             android:gravity="center_horizontal"
             android:text="@string/personas_cargadas"
             android:textColor="#4A4A4A"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -243,7 +252,8 @@
                 android:layout_height="180dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/fondo2"
-                android:onClick="Dengue">
+                android:onClick="Dengue"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ICONOSDENGUE"

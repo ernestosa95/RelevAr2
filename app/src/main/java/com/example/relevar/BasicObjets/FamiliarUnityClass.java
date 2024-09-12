@@ -20,7 +20,10 @@ public class FamiliarUnityClass implements Serializable {
     public String Pisos="", Techo="", Cielorraso="", Agua="", AguaOrigen="", Excretas="", Electricidad="", Fecha="";
     public String Gas="", AguaLluvia="", Arboles="", Baño="", BañoTiene="", calle = "", numero = "", numeroCartografia = "";
     public String SituacionHabitacional="", data_enuestador="", ObservacionesVivienda="";
-    public int cantidadMayores = 0, cantidadMenores = 0;
+    public int cantidadMayores_f = 0, cantidadMenores_f = 0;
+    public int cantidadMayores_m = 0, cantidadMenores_m = 0;
+
+    public String CentroReferencia = "", NecesidadCAPS = "";
     public String[] codigoColor = {"V"};
 
     public HashMap<String,String> Data = new HashMap<>();
@@ -124,8 +127,13 @@ public class FamiliarUnityClass implements Serializable {
 
     // BASE DE DATOS
     public void LoadData(){
-        if (Integer.toString(cantidadMenores).length()!=0){Data.put(context.getString(R.string.menores), Integer.toString(cantidadMenores));}
-        if (Integer.toString(cantidadMayores).length()!=0){Data.put(context.getString(R.string.mayores), Integer.toString(cantidadMayores));}
+        if (Integer.toString(cantidadMenores_f).length()!=0){Data.put("MENORES_F", Integer.toString(cantidadMenores_f));}
+        if (Integer.toString(cantidadMenores_m).length()!=0){Data.put("MENORES_M", Integer.toString(cantidadMenores_m));}
+        if (Integer.toString(cantidadMayores_f).length()!=0){Data.put("MAYORES_F", Integer.toString(cantidadMayores_f));}
+        if (Integer.toString(cantidadMayores_m).length()!=0){Data.put("MAYORES_M", Integer.toString(cantidadMayores_m));}
+        if (CentroReferencia.length()!=0){Data.put("CENTRO_SALUD_REFERENCIA", CentroReferencia);}
+        if (NecesidadCAPS.length()!=0){Data.put("NECECIDAD_DE_CAPS", NecesidadCAPS);}
+
         if (calle.length()!=0){Data.put(context.getString(R.string.calle), calle);}
         if (numero.length()!=0){Data.put(context.getString(R.string.numero), numero);}
         if (Longitud.length()!=0){Data.put(context.getString(R.string.longitud), Longitud);}
@@ -160,8 +168,13 @@ public class FamiliarUnityClass implements Serializable {
     }
 
     public void LoadDataHashToParameters(){
-        if(Data.get(context.getString(R.string.menores))!=null){cantidadMenores=Integer.parseInt(Data.get(context.getString(R.string.menores)));}
-        if(Data.get(context.getString(R.string.mayores))!=null){cantidadMayores=Integer.parseInt(Data.get(context.getString(R.string.mayores)));}
+        if(Data.get("MENORES_F")!=null){cantidadMenores_f=Integer.parseInt(Data.get("MENORES_F"));}
+        if(Data.get("MENORES_M")!=null){cantidadMenores_m=Integer.parseInt(Data.get("MENORES_M"));}
+        if(Data.get("MAYORES_F")!=null){cantidadMayores_f=Integer.parseInt(Data.get("MAYORES_F"));}
+        if(Data.get("MAYORES_M")!=null){cantidadMayores_m=Integer.parseInt(Data.get("MAYORES_M"));}
+        if(Data.get("CENTRO_SALUD_REFERENCIA")!=null){CentroReferencia=Data.get("CENTRO_SALUD_REFERENCIA");}
+        if(Data.get("NECECIDAD_DE_CAPS")!=null){NecesidadCAPS=Data.get("NECECIDAD_DE_CAPS");}
+
         if(Data.get(context.getString(R.string.calle))!=null){calle=Data.get(context.getString(R.string.calle));}
         if(Data.get(context.getString(R.string.numero))!=null){numero=Data.get(context.getString(R.string.numero));}
         if(Data.get(context.getString(R.string.longitud))!=null){Longitud=Data.get(context.getString(R.string.longitud));}

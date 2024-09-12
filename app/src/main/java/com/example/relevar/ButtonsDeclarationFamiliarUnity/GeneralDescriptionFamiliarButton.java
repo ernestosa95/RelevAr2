@@ -4,18 +4,24 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.relevar.BasicObjets.FamiliarUnityClass;
+import com.example.relevar.ManagementModule.StorageManagement.EfectoresSearchAdapter;
 import com.example.relevar.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralDescriptionFamiliarButton implements Serializable {
     FamiliarUnityClass familia;
@@ -127,19 +133,39 @@ public class GeneralDescriptionFamiliarButton implements Serializable {
             edtTelefonoFamiliar.setText(familia.TelefonoFamiliar);
         }
 
-        final EditText menores = view_alert.findViewById(R.id.EDTXTMENORES);
-        if (familia.cantidadMenores!=0) {
-            menores.setText(Integer.toString(familia.cantidadMenores));
+        final EditText menores_f = view_alert.findViewById(R.id.EDTXTMENORES);
+        if (familia.cantidadMenores_f!=0) {
+            menores_f.setText(Integer.toString(familia.cantidadMenores_f));
         }
-        final EditText mayores = view_alert.findViewById(R.id.EDTXTMAYORES);
-        if (familia.cantidadMayores!=0) {
-            mayores.setText(Integer.toString(familia.cantidadMayores));
+        final EditText menores_m = view_alert.findViewById(R.id.EDTXTMENORES3);
+        if (familia.cantidadMenores_m!=0) {
+            menores_m.setText(Integer.toString(familia.cantidadMenores_m));
+        }
+
+        final EditText mayores_m = view_alert.findViewById(R.id.EDTXTMAYORES);
+        if (familia.cantidadMayores_m!=0) {
+            mayores_m.setText(Integer.toString(familia.cantidadMayores_m));
+        }
+        final EditText mayores_f = view_alert.findViewById(R.id.EDTXTMAYORES2);
+        if (familia.cantidadMayores_f!=0) {
+            mayores_f.setText(Integer.toString(familia.cantidadMayores_f));
         }
 
         final EditText observaciones = view_alert.findViewById(R.id.TEXTOBSERVATION);
         if (familia.ObservacionesVivienda.length()!=0){
             observaciones.setText(familia.ObservacionesVivienda);
         }
+
+        // AUTOCOMPLETE TEXTVIEW DE LOS TRABAJOS
+        AutoCompleteTextView autoEfector;
+        autoEfector = view_alert.findViewById(R.id.autoEfector);
+        List<String> efectores = new ArrayList<String>();
+        EfectoresSearchAdapter searchAdapter = new EfectoresSearchAdapter(context, efectores);
+        autoEfector.setThreshold(1);
+        autoEfector.setAdapter(searchAdapter);
+
+        RadioButton siNecesidad = view_alert.findViewById(R.id.siNecesidad);
+        RadioButton noNecesidad = view_alert.findViewById(R.id.noNecesidad);
 
         final Button guardar = view_alert.findViewById(R.id.GUARDARFAMILIA);
         guardar.setOnClickListener(new View.OnClickListener() {
@@ -151,19 +177,39 @@ public class GeneralDescriptionFamiliarButton implements Serializable {
                         familia.ObservacionesVivienda = observaciones.getText().toString();
                     }
                     NumerosPersonas = 0;
-                    if (menores.getText().toString().length() != 0) {
-                        familia.cantidadMenores = Integer.parseInt(menores.getText().toString());
-                        NumerosPersonas += familia.cantidadMenores;
+                    if (menores_f.getText().toString().length() != 0) {
+                        familia.cantidadMenores_f = Integer.parseInt(menores_f.getText().toString());
+                        NumerosPersonas += familia.cantidadMenores_f;
                     }
-                    if (mayores.getText().toString().length() != 0) {
-                        familia.cantidadMayores = Integer.parseInt(mayores.getText().toString());
-                        NumerosPersonas += familia.cantidadMayores;
+                    if (menores_m.getText().toString().length() != 0) {
+                        familia.cantidadMenores_m = Integer.parseInt(menores_m.getText().toString());
+                        NumerosPersonas += familia.cantidadMenores_m;
                     }
+
+                    if (mayores_f.getText().toString().length() != 0) {
+                        familia.cantidadMayores_f = Integer.parseInt(mayores_f.getText().toString());
+                        NumerosPersonas += familia.cantidadMayores_f;
+                    }
+                    if (mayores_m.getText().toString().length() != 0) {
+                        familia.cantidadMayores_m = Integer.parseInt(mayores_m.getText().toString());
+                        NumerosPersonas += familia.cantidadMayores_m;
+                    }
+
+                    if (siNecesidad.isChecked()){
+                        familia.NecesidadCAPS = "SI";
+                    } else if (noNecesidad.isChecked()) {
+                        familia.NecesidadCAPS = "NO";
+                    }
+
+                    familia.CentroReferencia = autoEfector.getText().toString();
                     familia.calle = edtCalle.getText().toString();
                     familia.numero = edtNumero.getText().toString();
                     familia.numeroCartografia = edtnumerocartografia.getText().toString();
                     familia.TelefonoFamiliar = edtTelefonoFamiliar.getText().toString();
-                    if ((familia.cantidadMayores + familia.cantidadMenores) == NumerosPersonas || (familia.cantidadMayores + familia.cantidadMenores) == 0) {
+                    if ((familia.cantidadMayores_m + familia.cantidadMayores_f +
+                            familia.cantidadMenores_m + familia.cantidadMenores_f) ==
+                            NumerosPersonas || (familia.cantidadMayores_f + familia.cantidadMayores_m
+                                                    + familia.cantidadMenores_f + familia.cantidadMenores_m) == 0) {
                         ColorAvanceGeneralFamilia();
                         dialog.dismiss();
                     } else {
@@ -205,10 +251,16 @@ public class GeneralDescriptionFamiliarButton implements Serializable {
         if (familia.TelefonoFamiliar.length()!=0){
             avance+=1;
         }
-        if (familia.cantidadMayores!=0){
+        if (familia.cantidadMayores_f!=0){
             avance+=1;
         }
-        if (familia.cantidadMenores!=0){
+        if (familia.cantidadMayores_m!=0){
+            avance+=1;
+        }
+        if (familia.cantidadMenores_f!=0){
+            avance+=1;
+        }
+        if (familia.cantidadMenores_m!=0){
             avance+=1;
         }
 

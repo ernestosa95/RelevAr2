@@ -52,31 +52,31 @@ public class ButtonDeclaration {
         // DEFINICION DEL BOTON VIVIENDA
         // Agregar al vector que corresponda el nombre del boton
         String title = "VIVIENDA";
-        FamilyButtons.add(title);
+        /*FamilyButtons.add(title);
         // Agrego el boton al menu de opciones
         ButtonsViews.put(title, generateBtnMenu(R.drawable.vivienda, title));
         // Se le da el comportamiento al boton
-        buttons.put(title, new DwellingButton(context, ButtonsViews.get("VIVIENDA"), title));
+        buttons.put(title, new DwellingButton(context, ButtonsViews.get("VIVIENDA"), title));*/
         //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
         // DEFINICION DEL BOTON SERVICIOS BASICOS
         // Agregar al vector que corresponda el nombre del boton
-        title = "SERVICIOS BASICOS";
+        /*title = "SERVICIOS BASICOS";
         FamilyButtons.add(title);
         // Agrego el boton al menu de opciones
         ButtonsViews.put(title, generateBtnMenu(R.drawable.canilla, title));
         // Se le da el comportamiento al boton
-        buttons.put(title, new BasicServicesButton22(context, ButtonsViews.get(title),title));
+        buttons.put(title, new BasicServicesButton22(context, ButtonsViews.get(title),title));*/
         //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
         // DEFINICION INSPECCION EXTERIOR
         // Agregar al vector que corresponda el nombre del boton
-        title = "INSPECCION EXTERIOR";
+        /*title = "INSPECCION EXTERIOR";
         FamilyButtons.add(title);
         // Agrego el boton al menu de opciones
         ButtonsViews.put(title, generateBtnMenu(R.drawable.arboles, title));
         // Se le da el comportamiento al boton
-        buttons.put(title, new ExternalInspectionButton22(context, ButtonsViews.get(title), title));
+        buttons.put(title, new ExternalInspectionButton22(context, ButtonsViews.get(title), title));*/
         //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
