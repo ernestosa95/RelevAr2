@@ -885,23 +885,23 @@ public class Archivos implements Serializable {
                         }
 
                     }*/
-                    for (String cabecera : categories){
-                        if (families.get(j).Data.get(cabecera)!=null){
-                            if (options.get(cabecera.replace(" ","_"))!=null && options.get(families.get(j).Data.get(cabecera))!=null){
-                                data += options.get(families.get(j).Data.get(cabecera)) + ";";
-                            }else {
-                                data += families.get(j).Data.get(cabecera) + ";";
+                    for (String cabecera : categories) {
+                        if (families.get(j).Data.get(cabecera) != null) {
+                            if (options.get(cabecera.replace(" ", "_")) != null && options.get(families.get(j).Data.get(cabecera)) != null) {
+                                data += options.get(families.get(j).Data.get(cabecera).replace(";", "").replace("\n","")) + ";";
+                            } else {
+                                data += families.get(j).Data.get(cabecera).replace(";", "").replace("\n","") + ";";
                             }
-                        }else{
-                            if (aux.Data.get(cabecera)!=null) {
-                                data += aux.Data.get(cabecera) + ";";
+                        } else {
+                            if (aux.Data.get(cabecera) != null) {
+                                data += aux.Data.get(cabecera).replace(";", "").replace("\n","") + ";";
                             } else {
                                 data += ";";
                             }
                         }
                     }
+                    data += "\n";
                 }
-                data += "\n";
             }
 
             File dir = new File(nuevaCarpeta, NombreArchivo);

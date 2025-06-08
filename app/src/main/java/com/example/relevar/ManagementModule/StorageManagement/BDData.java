@@ -634,7 +634,7 @@ public class BDData extends SQLiteOpenHelper {
     public ArrayList<PersonClass> SearchPersonsCoordinatesFilatories(Context context, String latitude, String longitude){
         ArrayList<PersonClass> values = new ArrayList<>();
 
-        String search = "SELECT DISTINCT LATITUD, LONGITUD, FECHA_NACIMIENTO, NOMBRE, APELLIDO, DNI, SEXO FROM PERSONS WHERE LATITUD='"+latitude+"' AND LONGITUD='"+longitude+"'";
+        String search = "SELECT DISTINCT LATITUD, LONGITUD, NOMBRE, APELLIDO, DNI FROM PERSONS WHERE LATITUD='"+latitude+"' AND LONGITUD='"+longitude+"'";//, FECHA_NACIMIENTO, SEXO
 
         SQLiteDatabase db = this.getReadableDatabase();
 

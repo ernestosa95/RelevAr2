@@ -22,9 +22,11 @@
 
     <EditText
         android:id="@+id/EDITAPELLIDOBUSCAR"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_1"
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
@@ -36,9 +38,11 @@
 
     <EditText
         android:id="@+id/EDITNOMBREBUSCAR"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_1"
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
@@ -51,9 +55,11 @@
 
     <EditText
         android:id="@+id/EDITDNIBUSCAR"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_1"
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
@@ -66,13 +72,15 @@
 
     <Button
         android:id="@+id/BTNSEARCHPERSON"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/background_button_extra_light_grey"
+        android:elevation="5dp"
         android:text="@string/buscar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/EDITDNIBUSCAR"
+        app:layout_constraintStart_toStartOf="@+id/EDITDNIBUSCAR"
         app:layout_constraintTop_toBottomOf="@+id/EDITDNIBUSCAR" />
 
     <TextView

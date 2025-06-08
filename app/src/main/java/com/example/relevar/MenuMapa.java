@@ -1179,52 +1179,68 @@ public class MenuMapa extends AppCompatActivity implements OnMapReadyCallback, G
     //Configuraciones
     @SuppressLint("ResourceAsColor")
     public void Configurations(View view){
-        // Defino los contenedores
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MiEstiloAlert);
-        TextView textView = new TextView(this);
-        textView.setText(getString(R.string.configuraciones));
-        textView.setPadding(20, 30, 20, 30);
-        textView.setTextSize(16F);
-        textView.setHeight(100);
-        textView.setBackgroundColor(Color.parseColor("#4588BC"));
-        textView.setTextColor(Color.WHITE);
-        builder.setCustomTitle(textView);
-
-        // Defino el Layaout que va a contener a los Check
-        LinearLayout mainLayout = new LinearLayout(this);
-        mainLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(5,2,5,2);
-        layoutParams.gravity = 2;
-
-        Button btnButtons = new Button(this);
-        btnButtons.setText(getText(R.string.botones));
-        btnButtons.setBackgroundColor(R.color.colorImpar);
-        btnButtons.setLayoutParams(layoutParams);
-        mainLayout.addView(btnButtons);
-        btnButtons.setOnClickListener(view1 -> SwitchButtons());
-
-        Button btnNotifications = new Button(this);
-        btnNotifications.setText(getText(R.string.notificaciones));
-        btnNotifications.setBackgroundColor(R.color.colorImpar);
-        btnNotifications.setLayoutParams(layoutParams);
-        btnNotifications.setOnClickListener(view12 -> SwitchNotifications());
-        mainLayout.addView(btnNotifications);
-
-        builder.setPositiveButton("CERRAR", null);
-
-        // Defino un ScrollView para visualizar todos
-        ScrollView sv = new ScrollView(this);
-        sv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        sv.setVerticalScrollBarEnabled(true);
-        sv.addView(mainLayout);
-
-        builder.setView(sv);
-        // Create and show the alert dialog
-        AlertDialog dialog = builder.create();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater Inflater = LayoutInflater.from(this);
+        final View view_config = Inflater.inflate(R.layout.basic_alert, null);
+        view_config.setFocusable(true);
+        builder.setView(view_config);
+        builder.setCancelable(false);
+        final AlertDialog dialog = builder.create();
         dialog.show();
+
+        //Cabecera
+        TextView txtCabecera = view_config.findViewById(R.id.TXTGralCabecera);
+        txtCabecera.setText("Configuraciones");
+
+        //Crear el linerLayout que va a contener las diferentes categorias
+        LinearLayout lyOptions = view_config.findViewById(R.id.LYGralOptions);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, // O el ancho que desees
+                LinearLayout.LayoutParams.WRAP_CONTENT  // O la altura que desees
+        );
+        params.setMargins(0, 0, 0, 5);
+
+        Button newButtonFechas = new Button(view_config.getContext());
+        newButtonFechas.setText("FECHAS DE REGISTRO");
+        newButtonFechas.setBackgroundResource(R.drawable.background_light_grey);
+        newButtonFechas.setOnClickListener(view1 -> SelectDate(null));
+        newButtonFechas.setLayoutParams(params);
+
+        Button newButtonReferencias = new Button(view_config.getContext());
+        newButtonReferencias.setText("PUNTOS REFERENCIA");
+        newButtonReferencias.setBackgroundResource(R.drawable.background_light_grey);
+        newButtonReferencias.setOnClickListener(view1 -> ReferencePoints(null));
+        newButtonReferencias.setLayoutParams(params);
+
+        Button newButtonEstadisticas = new Button(view_config.getContext());
+        newButtonEstadisticas.setText("ESTADISTICAS");
+        newButtonEstadisticas.setBackgroundResource(R.drawable.background_light_grey);
+        newButtonEstadisticas.setOnClickListener(view1 -> Statistics(null));
+        newButtonEstadisticas.setLayoutParams(params);
+
+        Button newButtonCompartirMapa = new Button(view_config.getContext());
+        newButtonCompartirMapa.setText("COMPARTIR MAPA");
+        newButtonCompartirMapa.setBackgroundResource(R.drawable.background_light_grey);
+        newButtonCompartirMapa.setOnClickListener(view1 -> ShareMap(null));
+        newButtonCompartirMapa.setLayoutParams(params);
+
+        lyOptions.addView(newButtonFechas);
+        lyOptions.addView(newButtonReferencias);
+        lyOptions.addView(newButtonEstadisticas);
+        lyOptions.addView(newButtonCompartirMapa);
+
+        //Boton guardar
+        Button guardar = view_config.findViewById(R.id.GUARDARGrl);
+        guardar.setVisibility(View.GONE);
+
+        //Boton cancelar
+        ImageButton cancelar = view_config.findViewById(R.id.CANCELARGrl);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @SuppressLint("ResourceAsColor")

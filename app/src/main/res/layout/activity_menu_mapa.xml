@@ -18,6 +18,67 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout9" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/BTNNEAR"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/background_blue"
+        android:onClick="FamiliesNear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BTNSEARCH">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout11"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/background_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TEXTVIEWCANTCERCANOS">
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:elevation="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/familia" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="FAMILIAS CERCA"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
+
+        <TextView
+            android:id="@+id/TEXTVIEWCANTCERCANOS"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/cuadrado_rojo"
+            android:elevation="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bac"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -29,69 +90,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/BTNNEAR"
-            android:layout_width="90dp"
-            android:layout_height="0dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/background_button_light_blue"
-            android:onClick="FamiliesNear"
-            app:layout_constraintBottom_toBottomOf="@+id/REGISTEREDFAMILIES"
-            app:layout_constraintEnd_toStartOf="@+id/REGISTEREDFAMILIES"
-            app:layout_constraintTop_toTopOf="@+id/REGISTEREDFAMILIES">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout11"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/background_blue"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/TEXTVIEWCANTCERCANOS"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/familia" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/textView39"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="FAM. CERCA"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/constraintLayout11"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/TEXTVIEWCANTCERCANOS"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:background="@drawable/cuadrado_rojo"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="0"
-                android:textColor="#FFFFFF"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/REGISTEREDFAMILIES"
             android:layout_width="100dp"
             android:layout_height="0dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/button1"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/EMPEZAR2"
             app:layout_constraintEnd_toStartOf="@+id/EMPEZAR2"
             app:layout_constraintTop_toTopOf="@+id/EMPEZAR2">
@@ -124,10 +128,11 @@
 
         <Button
             android:id="@+id/EMPEZAR2"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/button1"
             android:onClick="NuevaFamilia"
             android:text="@string/registrar_familia"
@@ -135,15 +140,54 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/BTNSEARCH"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-20dp"
+        android:background="@drawable/button_redondo_blanco"
+        android:elevation="5dp"
+        android:onClick="SearchPerson"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="1dp"
+            android:text="@string/buscar"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/loupe" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout9"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="#69A4D1"
+        android:background="@drawable/fondo5"
         android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -159,6 +203,7 @@
             android:onClick="SelectDate"
             android:text="@string/fechas"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -173,6 +218,7 @@
             android:text="puntos referencia"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -190,44 +236,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/configuracion" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/BTNSEARCH"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/button_redondo_blanco"
-            android:elevation="2dp"
-            android:onClick="SearchPerson"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/BTNFECHA"
-            app:layout_constraintStart_toEndOf="@+id/BTNFECHA"
-            app:layout_constraintTop_toTopOf="@+id/BTNFECHA">
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="1dp"
-                android:text="@string/buscar"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="35dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/loupe" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/BTNMESSAGE"
@@ -263,6 +271,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/email" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/background_button_light_blue"
+            android:elevation="5dp"
+            android:onClick="Configurations"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imagen_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/configuracion" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -313,7 +343,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="ShareMap"
-            android:visibility="visible"
+            android:visibility="gone"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_icon="@android:drawable/ic_menu_mapmode"
             app:fab_size="normal"
@@ -325,7 +355,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="Statistics"
-            android:visibility="visible"
+            android:visibility="gone"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_icon="@drawable/analitica"
             app:fab_size="normal"
@@ -339,7 +369,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/button_redondo_celeste"
+        android:background="@drawable/button_redondo_azul"
         android:elevation="5dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bac"
@@ -373,7 +403,7 @@
             android:id="@+id/IMGBTCENTRAR2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/button_redondo_celeste"
+            android:background="@drawable/button_redondo_azul"
             android:elevation="5dp"
             android:onClick="TerminarRecorrido"
             android:visibility="visible"
